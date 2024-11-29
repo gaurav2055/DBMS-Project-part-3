@@ -7,7 +7,7 @@ import java.util.*;
 /*
  * This file is where you will implement the methods needed to support this application.
  * You will write the code to retrieve and save information to the database and use that
- * information to build the various objects required by the applicaiton.
+ * information to build the various objects required by the application.
  * 
  * The class has several hard coded static variables used for the connection, you will need to
  * change those to your connection information
@@ -89,7 +89,7 @@ public final class DBNinja {
 	public static int addPizza(java.util.Date d, int orderID, Pizza p) throws SQLException, IOException
 	{
 		/*
-		 * Add the code needed to insert the pizza into into the database.
+		 * Add the code needed to insert the pizza into the database.
 		 * Keep in mind you must also add the pizza discounts and toppings 
 		 * associated with the pizza.
 		 * 
@@ -176,13 +176,27 @@ public final class DBNinja {
 		 * return them in an arrayList of discounts ordered by discount name.
 		 * 
 		*/
-		return null;
+		ArrayList<Discount> discounts = new ArrayList<>();
+		connect_to_db();
+		String query = "SELECT * FROM discount";
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		while (rs.next()){
+			int ID = rs.getInt("discount_DiscountID");
+			String discontName = rs.getString("discount_DiscountName");
+			float amt = rs.getFloat("discount_Amount");
+			boolean isPercent = rs.getBoolean("discount_IsPercent");
+			Discount dis = new Discount(ID, discontName, amt, isPercent);
+			discounts.add(dis);
+		}
+		conn.close();
+		return discounts;
 	}
 
 	public static Discount findDiscountByName(String name) throws SQLException, IOException 
 	{
 		/*
-		 * Query the database for a discount using it's name.
+		 * Query the database for a discount using its name.
 		 * If found, then return an OrderDiscount object for the discount.
 		 * If it's not found....then return null
 		 *  
@@ -198,7 +212,23 @@ public final class DBNinja {
 		 * Don't forget to order the data coming from the database appropriately.
 		 * 
 		*/
-		return null;
+		ArrayList<Customer> customerList = new ArrayList<>();
+		connect_to_db();
+
+		String query = "SELECT * FROM customer";
+		Statement stmt = conn.createStatement();
+		ResultSet rs = stmt.executeQuery(query);
+		System.out.println(rs);
+		while (rs.next()){
+			int id = rs.getInt("customer_CustID");
+			String fName = rs.getString("customer_FName");
+			String lName = rs.getString("customer_LName");
+			String phone = rs.getString("customer_PhoneNum");
+			Customer customer = new Customer(id, fName, lName, phone);
+			customerList.add(customer);
+		}
+		conn.close();
+		return customerList;
 	}
 
 	public static Customer findCustomerByPhone(String phoneNumber)  throws SQLException, IOException 
@@ -236,11 +266,11 @@ public final class DBNinja {
 		String cname2 = "";
 		String query = "Select customer_FName, customer_LName From customer WHERE customer_CustID=" + CustID + ";";
 		Statement stmt = conn.createStatement();
-		ResultSet rset = stmt.executeQuery(query);
+		ResultSet rs = stmt.executeQuery(query);
 		
-		while(rset.next())
+		while(rs.next())
 		{
-			cname1 = rset.getString(1) + " " + rset.getString(2); 
+			cname1 = rs.getString(1) + " " + rs.getString(2); 
 		}
 
 		/* 
@@ -282,13 +312,34 @@ public final class DBNinja {
 		 * Don't forget to order the data coming from the database appropriately.
 		 * 
 		 */
-		return null;
+		ArrayList<Topping> toppings = new ArrayList<>();
+		connect_to_db();
+		String query = "SELECT topping_TopID, topping_TopName, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT, topping_CustPrice, topping_BusPrice, topping_MinINVT, topping_CurINVT FROM topping";
+		PreparedStatement stmt = conn.prepareStatement(query);
+		ResultSet rs = stmt.executeQuery();
+		while(rs.next()){
+			int id = rs.getInt("topping_TopID");
+			String topName = rs.getString("topping_TopName");
+			float smallAMT = rs.getFloat("topping_SmallAMT");
+			float medAMT = rs.getFloat("topping_MedAMT");
+			float largeAMT = rs.getFloat("topping_LgAMT");
+			float xlAMT = rs.getFloat("topping_XLAMT");
+			float custPrice = rs.getFloat("topping_CustPrice");
+			float busPrice = rs.getFloat("topping_BusPrice");
+			int minINVT = rs.getInt("topping_MinINVT");
+			int curINVT = rs.getInt("topping_CurINVT");
+
+			Topping topping = new Topping(id, topName, smallAMT, medAMT, largeAMT, xlAMT, custPrice, busPrice, minINVT, curINVT);
+			toppings.add(topping);
+		}
+		conn.close();
+		return toppings;
 	}
 
 	public static Topping findToppingByName(String name) throws SQLException, IOException 
 	{
 		/*
-		 * Query the database for the topping using it's name.
+		 * Query the database for the topping using its name.
 		 * If found, then return a Topping object for the topping.
 		 * If it's not found....then return null
 		 *  
@@ -347,7 +398,7 @@ public final class DBNinja {
 	public static double getBaseCustPrice(String size, String crust) throws SQLException, IOException 
 	{
 		/* 
-		 * Query the database fro the base customer price for that size and crust pizza.
+		 * Query the database from the base customer price for that size and crust pizza.
 		 * 
 		*/
 		return 0.0;
@@ -356,7 +407,7 @@ public final class DBNinja {
 	public static double getBaseBusPrice(String size, String crust) throws SQLException, IOException 
 	{
 		/* 
-		 * Query the database fro the base business price for that size and crust pizza.
+		 * Query the database from the base business price for that size and crust pizza.
 		 * 
 		*/
 		return 0.0;
