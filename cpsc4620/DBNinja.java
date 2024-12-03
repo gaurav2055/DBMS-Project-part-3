@@ -225,7 +225,7 @@ public final class DBNinja {
 					pstmt.setInt(2, t.getTopID());
 					pstmt.setBoolean(3, t.getDoubled());
 					pstmt.executeUpdate();
-					addToInventory(t.getTopID(),t.getDoubled() ? 2: 1);
+					addToInventory(t.getTopID(),t.getDoubled() ? -2: -1);
 				}
 
 				// 3. Add pizza discounts
@@ -1022,12 +1022,13 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 		 * */
 		try{
 			connect_to_db();
-			String query = "UPDATE topping SET topping_CurINVT = topping_CurINVT + ? WHERE topping_TopID = ?";
-			PreparedStatement stmt = conn.prepareStatement(query);
-			stmt.setDouble(1, quantity);
-			stmt.setInt(2, toppingID);
-			stmt.executeUpdate();
-
+			if(conn != null) {
+				String query = "UPDATE topping SET topping_CurINVT = topping_CurINVT + ? WHERE topping_TopID = ?";
+				PreparedStatement stmt = conn.prepareStatement(query);
+				stmt.setDouble(1, quantity);
+				stmt.setInt(2, toppingID);
+				stmt.executeUpdate();
+			}
 		} finally {
 			if(conn != null) {
 				conn.close();
