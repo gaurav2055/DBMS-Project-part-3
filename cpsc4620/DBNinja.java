@@ -91,7 +91,11 @@ public final class DBNinja {
 			// 1. Insert into orders table
 			String orderSQL = "INSERT INTO ordertable ( customer_CustID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_IsComplete) VALUES (?, ?, ?, ?, ?, ?)";
 			PreparedStatement pstmt = conn.prepareStatement(orderSQL, Statement.RETURN_GENERATED_KEYS);
+			if(o.getCustID() != -1){
 			pstmt.setInt(1, o.getCustID());
+			} else {
+				pstmt.setObject(1, null);
+			}
 			pstmt.setString(2, o.getOrderType());
 			pstmt.setString(3, o.getDate());
 			pstmt.setDouble(4, o.getCustPrice());
@@ -110,8 +114,8 @@ public final class DBNinja {
 			}
 			// 2. Handle order type specific tables
 			String orderType = o.getOrderType();
-			switch (orderType) {
-				case "Delivery":
+			switch (orderType.toLowerCase()) {
+				case "delivery":
 					DeliveryOrder delivery = (DeliveryOrder) o;
 					String deliverySQL = "INSERT INTO delivery (ordertable_OrderID, delivery_HouseNum, delivery_Street, delivery_City, delivery_State, delivery_Zip, delivery_IsDelivered) VALUES (?, ?, ?, ?, ?, ?, ?)";
 					pstmt = conn.prepareStatement(deliverySQL);
@@ -128,14 +132,14 @@ public final class DBNinja {
 					pstmt.setBoolean(7, delivery.getIsComplete());
 					pstmt.executeUpdate();
 					break;
-				case "Pickup":
+				case "pickup":
 					String pickupSQL = "INSERT INTO pickup (ordertable_OrderID, pickup_IsPickedUp) VALUES (?, ?)";
 					pstmt = conn.prepareStatement(pickupSQL);
 					pstmt.setInt(1, generatedOrderID);
 					pstmt.setBoolean(2, false);
 					pstmt.executeUpdate();
 					break;
-				case "DineIn":
+				case "dinein":
 					DineinOrder dineIn = (DineinOrder) o;
 					String dineinSQL = "INSERT INTO dinein (ordertable_OrderID, dinein_TableNum) VALUES (?, ?)";
 					pstmt = conn.prepareStatement(dineinSQL);
@@ -199,16 +203,6 @@ public final class DBNinja {
 				pstmt.setDouble(7, p.getBusPrice());
 				pstmt.executeUpdate();
 
-				// 2. Add toppings for this pizza
-				for (Topping t : p.getToppings()) {
-					String toppingSQL = "INSERT INTO pizza_topping (pizza_PizzaID, topping_TopID, pizza_topping_IsDouble) VALUES (?, ?, ?)";
-					pstmt = conn.prepareStatement(toppingSQL);
-					pstmt.setInt(1, p.getPizzaID());
-					pstmt.setInt(2, t.getTopID());
-					pstmt.setBoolean(3, t.getDoubled());
-					pstmt.executeUpdate();
-				}
-
 				ResultSet generatedKeys = pstmt.getGeneratedKeys();
 				int generatedPizzaID = -1;
 				if (generatedKeys.next()) {
@@ -216,6 +210,16 @@ public final class DBNinja {
 					System.out.println("Generated PizzaID: " + generatedPizzaID);
 				} else {
 					throw new SQLException("Failed to retrieve generated OrderID.");
+				}
+
+				// 2. Add toppings for this pizza
+				for (Topping t : p.getToppings()) {
+					String toppingSQL = "INSERT INTO pizza_topping (pizza_PizzaID, topping_TopID, pizza_topping_IsDouble) VALUES (?, ?, ?)";
+					pstmt = conn.prepareStatement(toppingSQL);
+					pstmt.setInt(1, generatedPizzaID);
+					pstmt.setInt(2, t.getTopID());
+					pstmt.setBoolean(3, t.getDoubled());
+					pstmt.executeUpdate();
 				}
 
 				// 3. Add pizza discounts
@@ -490,7 +494,7 @@ public static ArrayList<Order> getOrders(int status) throws SQLException, IOExce
 					"LEFT JOIN delivery d ON o.ordertable_OrderID = d.ordertable_OrderID " +
 					"LEFT JOIN dinein di ON o.ordertable_OrderID = di.ordertable_OrderID " +
 					"LEFT JOIN pickup p ON o.ordertable_OrderID = p.ordertable_OrderID " +
-					"ORDER BY o.ordertable_OrderID";
+					"ORDER BY o.ordertable_OrderDateTime";
 			PreparedStatement pstmt = conn.prepareStatement(query);
 			ResultSet rs = pstmt.executeQuery();
 

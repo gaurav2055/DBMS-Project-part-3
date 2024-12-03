@@ -1,218 +1,338 @@
 USE PizzaDB;
 
--- Populate Toppings Table
-INSERT INTO topping (topping_TopName, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT, topping_CustPrice, topping_BusPrice, topping_MinINVT, topping_CurINVT)
-VALUES 
-('Pepperoni', 2, 2.75, 3.5, 4.5, 1.25, 0.2, 50, 100),
-('Sausage', 2.5, 3, 3.5, 4.25, 1.25, 0.15, 50, 100),
-('Ham', 2, 2.5, 3.25, 4, 1.5, 0.15, 25, 78),
-('Chicken', 1.5, 2, 2.25, 3, 1.75, 0.25, 25, 56),
-('Green Pepper', 1, 1.5, 2, 2.5, 0.5, 0.02, 25, 79),
-('Onion', 1, 1.5, 2, 2.75, 0.5, 0.02, 25, 85),
-('Roma Tomato', 2, 3, 3.5, 4.5, 0.75, 0.03, 10, 86),
-('Mushrooms', 1.5, 2, 2.5, 3, 0.75, 0.1, 50, 52),
-('Black Olives', 0.75, 1, 1.5, 2, 0.6, 0.1, 25, 39),
-('Pineapple', 1, 1.25, 1.75, 2, 1, 0.25, 0, 15),
-('Jalapenos', 0.5, 0.75, 1.25, 1.75, 0.5, 0.05, 0, 64),
-('Banana Peppers', 0.6, 1, 1.3, 1.75, 0.5, 0.05, 0, 36),
-('Regular Cheese', 2, 3.5, 5, 7, 0.5, 0.12, 50, 250),
-('Four Cheese Blend', 2, 3.5, 5, 7, 1, 0.15, 25, 150),
-('Feta Cheese', 1.75, 3, 4, 5.5, 1.5, 0.18, 0, 75),
-('Goat Cheese', 1.6, 2.75, 4, 5.5, 1.5, 0.2, 0, 54),
-('Bacon', 1, 1.5, 2, 3, 1.5, 0.25, 0, 89);
+-- topping rows
+INSERT INTO topping (topping_TopName, topping_CustPrice, topping_BusPrice, topping_CurINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT)
+VALUES ('Pepperoni', 1.25, 0.2, 100, 50, 2, 2.75, 3.5, 4.5);
+INSERT INTO topping (topping_TopName, topping_CustPrice, topping_BusPrice, topping_CurINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT)
+VALUES ('Sausage', 1.25, 0.15, 100,50, 2.5, 3, 3.5, 4.25);
+INSERT INTO topping (topping_TopName, topping_CustPrice, topping_BusPrice, topping_CurINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT)
+VALUES ('Ham', 1.5, 0.15, 78, 25, 2, 2.5, 3.25, 4);
+INSERT INTO topping (topping_TopName, topping_CustPrice, topping_BusPrice, topping_CurINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT)
+VALUES ('Chicken', 1.75, 0.25, 56, 25, 1.5, 2, 2.25, 3);
+INSERT INTO topping (topping_TopName, topping_CustPrice, topping_BusPrice, topping_CurINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT)
+VALUES ('Green Pepper', 0.5, 0.02, 79, 25, 1, 1.5, 2, 2.5);
+INSERT INTO topping (topping_TopName, topping_CustPrice, topping_BusPrice, topping_CurINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT)
+VALUES ('Onion', 0.5, 0.02, 85, 25, 1, 1.5, 2, 2.75);
+INSERT INTO topping (topping_TopName, topping_CustPrice, topping_BusPrice, topping_CurINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT)
+VALUES ('Roma Tomato', 0.75, 0.03, 86, 10, 2, 3, 3.5, 4.5);
+INSERT INTO topping (topping_TopName, topping_CustPrice, topping_BusPrice, topping_CurINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT)
+VALUES ('Mushrooms', 0.75, 0.1, 52, 50, 1.5, 2, 2.5, 3);
+INSERT INTO topping (topping_TopName, topping_CustPrice, topping_BusPrice, topping_CurINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT)
+VALUES ('Black Olives', 0.6, 0.1, 39, 25, 0.75, 1, 1.5, 2);
+INSERT INTO topping (topping_TopName, topping_CustPrice, topping_BusPrice, topping_CurINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT)
+VALUES ('Pineapple', 1, 0.25, 15, 0, 1, 1.25, 1.75, 2);
+INSERT INTO topping (topping_TopName, topping_CustPrice, topping_BusPrice, topping_CurINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT)
+VALUES ('Jalapenos', 0.5, 0.05, 64, 0, 0.5, 0.75, 1.25, 1.75);
+INSERT INTO topping (topping_TopName, topping_CustPrice, topping_BusPrice, topping_CurINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT)
+VALUES ('Banana Peppers', 0.5, 0.05, 36, 0, 0.6, 1, 1.3, 1.75);
+INSERT INTO topping (topping_TopName, topping_CustPrice, topping_BusPrice, topping_CurINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT)
+VALUES ('Regular Cheese', 0.5, 0.12, 250, 50, 2, 3.5, 5, 7);
+INSERT INTO topping (topping_TopName, topping_CustPrice, topping_BusPrice, topping_CurINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT)
+VALUES ('Four Cheese Blend', 1, 0.15, 150, 25, 2, 3.5, 5, 7);
+INSERT INTO topping (topping_TopName, topping_CustPrice, topping_BusPrice, topping_CurINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT)
+VALUES ('Feta Cheese', 1.5, 0.18, 75, 0, 1.75, 3, 4, 5.5);
+INSERT INTO topping (topping_TopName, topping_CustPrice, topping_BusPrice, topping_CurINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT)
+VALUES ('Goat Cheese', 1.5, 0.2, 54, 0, 1.6, 2.75, 4, 5.5);
+INSERT INTO topping (topping_TopName, topping_CustPrice, topping_BusPrice, topping_CurINVT, topping_MinINVT, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT)
+VALUES ('Bacon', 1.5, 0.25, 89, 0, 1, 1.5, 2, 3);
 
--- Populate Discounts Table
+
+-- discount rows
 INSERT INTO discount (discount_DiscountName, discount_Amount, discount_IsPercent)
-VALUES 
-('Employee', 15, 1), -- 15% discount
-('Lunch Special Medium', 1, 0),
-('Lunch Special Large', 2, 0),
-('Specialty Pizza', 1.5, 0),
-('Happy Hour', 10, 1), -- 10% discount
-('Gameday Special', 20, 1); -- 20% discount
-
--- Populate Base Prices Table
-INSERT INTO baseprice (baseprice_Size, baseprice_CrustType, baseprice_CustPrice, baseprice_BusPrice)
-VALUES 
-('Small', 'Thin', 3, 0.5),
-('Small', 'Original', 3, 0.75),
-('Small', 'Pan', 3.5, 1),
-('Small', 'Gluten-Free', 4, 2),
-('Medium', 'Thin', 5, 1),
-('Medium', 'Original', 5, 1.5),
-('Medium', 'Pan', 6, 2.25),
-('Medium', 'Gluten-Free', 6.25, 3),
-('Large', 'Thin', 8, 1.25),
-('Large', 'Original', 8, 2),
-('Large', 'Pan', 9, 3),
-('Large', 'Gluten-Free', 9.5, 4),
-('XLarge', 'Thin', 10, 2),
-('XLarge', 'Original', 10, 3),
-('XLarge', 'Pan', 11.5, 4.5),
-('XLarge', 'Gluten-Free', 12.5, 6);
-
--- Add Customers
-# INSERT INTO customer (customer_FName, customer_LName, customer_PhoneNum)
-# VALUES
-# ('John', 'Doe', '123-456-7890'),
-# ('Jane', 'Smith', '987-654-3210'),
-# ('Andrew', 'Wilkes-Krier', '864-254-5861'),
-# ('Frank', 'Turner', '864-232-8944');
-#
-# -- Example Orders
-# INSERT INTO ordertable (customer_CustID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete)
-# VALUES
-# (1, 'dinein ', '2024-03-05 12:03:00', 19.75, 3.68, 1), -- Example completed dinein  order
-# (2, 'pickup', '2024-04-03 12:05:00', 26.25, 4.63, 1), -- Example pickup order
-# (3, 'delivery', '2024-04-20 19:11:00', 86.19, 23.62, 1), -- Example completed delivery order
-# (4, 'delivery', '2024-03-02 17:30:00', 27.45, 7.88, 0); -- Example delivery in progress
-#
-# -- Example Pizzas
-# INSERT INTO pizza (pizza_Size, pizza_CrustType, ordertable_OrderID, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice)
-# VALUES
-# ('Large', 'Thin', 1, 'Completed', '2024-03-05 12:03:00', 19.75, 3.68),
-# ('Medium', 'Pan', 2, 'Completed', '2024-04-03 12:05:00', 12.85, 3.23),
-# ('XLarge', 'Gluten-Free', 3, 'Completed', '2024-04-20 19:11:00', 27.94, 9.19),
-# ('XLarge', 'Thin', 4, 'In Progress', '2024-03-02 17:30:00', 27.45, 7.88);
-#
-# -- Populate Example Pizza Toppings
-# INSERT INTO pizza_topping (pizza_PizzaID, topping_TopID, pizza_topping_IsDouble)
-# VALUES
-# (1, 1, 1), -- Double Pepperoni on pizza 1
-# (1, 2, 0), -- Single Sausage on pizza 1
-# (2, 5, 0), -- Single Green Pepper on pizza 2
-# (2, 6, 0), -- Single Onion on pizza 2
-# (3, 13, 1), -- Double Regular Cheese on pizza 3
-# (4, 16, 0); -- Single Goat Cheese on pizza 4
-
-CALL AddSingleOrderWithMultiplePizzas(
-    NULL, NULL, NULL,                -- Customer Info (NULL for dine-in)
-    'dinein',                        -- Order Type
-    '2024-03-05 12:03:00',           -- Order DateTime
-    NULL, NULL, NULL, NULL, NULL,    -- Delivery Address (not needed for dine-in)
-    21,                              -- Table Number
-    NULL,                            -- Is Picked Up (not needed for dine-in)
-    1,                               -- Number of Pizzas
-    'Large',                         -- Pizza Size
-    'Thin',                          -- Pizza Crust
-    'Regular Cheese:1,Pepperoni:0,Sausage:0',-- Pizza Toppings
-    '19.75',                         -- Customer Price
-    '3.68',                          -- Business Price
-    'Lunch Special Large',           -- Pizza Discounts
-    NULL,                            -- Order Discount
-    1                                -- Is Complete
-);
+VALUES ('Employee', 15, 1);
+INSERT INTO discount (discount_DiscountName, discount_Amount, discount_IsPercent)
+VALUES ('Lunch Special Medium', 1, 0);
+INSERT INTO discount (discount_DiscountName, discount_Amount, discount_IsPercent)
+VALUES ('Lunch Special Large', 2, 0);
+INSERT INTO discount (discount_DiscountName, discount_Amount, discount_IsPercent)
+VALUES ('Specialty Pizza', 1.5, 0);
+INSERT INTO discount (discount_DiscountName, discount_Amount, discount_IsPercent)
+VALUES ('Happy Hour', 10, 1);
+INSERT INTO discount (discount_DiscountName, discount_Amount, discount_IsPercent)
+VALUES ('Gameday Special', 20, 1);
 
 
-CALL AddSingleOrderWithMultiplePizzas(
-    NULL, NULL, NULL,                -- Customer Info (NULL for dine-in)
-    'dinein',                        -- Order Type
-    '2024-04-03 12:05:00',           -- Order DateTime
-    NULL, NULL, NULL, NULL, NULL,    -- Delivery Address (not needed for dine-in)
-    4,                               -- Table Number
-    NULL,                            -- Is Picked Up (not needed for dine-in)
-    2,                               -- Number of Pizzas
-    'Medium,Small',                  -- Pizza Sizes
-    'Pan,Original',                  -- Pizza Crusts
-    'Feta Cheese:0,Black Olives:0,Roma Tomato:0,Mushrooms:0,Banana Peppers:0|' -- Toppings for Pizza 1
-    'Regular Cheese:0,Chicken:0,Banana Peppers:0',                                       -- Toppings for Pizza 2
-    '12.85,6.93',                    -- Customer Prices
-    '3.23,1.40',                     -- Business Prices
-    'Lunch Special Medium,',         -- Pizza Discounts (discount for pizza 1 only)
-    NULL,                            -- Order Discount
-    1                                -- Is Complete
-);
+-- baseprice rows
+INSERT INTO baseprice VALUES ('Small', 'Thin', 3, 0.5);
+INSERT INTO baseprice VALUES ('Small', 'Original', 3, 0.75);
+INSERT INTO baseprice VALUES ('Small', 'Pan', 3.5, 1);
+INSERT INTO baseprice VALUES ('Small', 'Gluten-Free', 4, 2);
+INSERT INTO baseprice VALUES ('Medium', 'Thin', 5, 1);
+INSERT INTO baseprice VALUES ('Medium', 'Original', 5, 1.5);
+INSERT INTO baseprice VALUES ('Medium', 'Pan', 6, 2.25);
+INSERT INTO baseprice VALUES ('Medium', 'Gluten-Free', 6.25, 3);
+INSERT INTO baseprice VALUES ('Large', 'Thin', 8, 1.25);
+INSERT INTO baseprice VALUES ('Large', 'Original', 8, 2);
+INSERT INTO baseprice VALUES ('Large', 'Pan', 9, 3);
+INSERT INTO baseprice VALUES ('Large', 'Gluten-Free', 9.5, 4);
+INSERT INTO baseprice VALUES ('XLarge', 'Thin', 10, 2);
+INSERT INTO baseprice VALUES ('XLarge', 'Original', 10, 3);
+INSERT INTO baseprice VALUES ('XLarge', 'Pan', 11.5, 4.5);
+INSERT INTO baseprice VALUES ('XLarge', 'Gluten-Free', 12.5, 6);
 
-CALL AddSingleOrderWithMultiplePizzas(
-    'Andrew', 'Wilkes-Krier', '864-254-5861', -- Customer Info
-    'pickup',                                -- Order Type
-    '2024-03-03 21:30:00',                   -- Order DateTime
-    NULL, NULL, NULL, NULL, NULL,            -- Delivery Address (not needed for pickup)
-    NULL,                                    -- Table Number
-    0,                                       -- Is Picked Up
-    6,                                       -- Number of Pizzas
-    'Large,Large,Large,Large,Large,Large',   -- Pizza Sizes
-    'Original,Original,Original,Original,Original,Original', -- Pizza Crusts
-    'Regular Cheese:0,Pepperoni:0|Regular Cheese:0,Pepperoni:0|Regular Cheese:0,Pepperoni:0|Regular Cheese:0,Pepperoni:0|Regular Cheese:0,Pepperoni:0|Regular Cheese:0,Pepperoni:0',
-    '14.88,14.88,14.88,14.88,14.88,14.88',   -- Customer Prices
-    '3.30,3.30,3.30,3.30,3.30,3.30',         -- Business Prices
-    NULL,                                    -- Pizza Discounts
-    NULL,                                    -- Order Discount
-    1                                        -- Is Complete
-);
+-- order 1
+START TRANSACTION;
 
+INSERT INTO ordertable (customer_CustID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete)
+VALUES (NULL, 'dinein', '2024-03-05 12:03:00', 19.75, 3.68, 1);
 
-CALL AddSingleOrderWithMultiplePizzas(
-    'Andrew', 'Wilkes-Krier', '864-254-5861', -- Customer Info
-    'delivery',                              -- Order Type
-    '2024-04-20 19:11:00',                   -- Order DateTime
-    115, 'Party Blvd', 'Anderson', 'SC', 29621, -- Delivery Address
-    NULL,                                    -- Table Number
-    NULL,                                    -- Is Picked Up
-    3,                                       -- Number of Pizzas
-    'XLarge,XLarge,XLarge',                  -- Pizza Sizes
-    'Original,Original,Original',            -- Pizza Crusts
-    'Pepperoni:0,Sausage:0|Ham:1,Pineapple:1|Chicken:0,Bacon:0',
-    '27.94,31.50,26.75',                     -- Customer Prices
-    '9.19,6.25,8.18',                        -- Business Prices
-    ',Specialty Pizza,',                     -- Pizza Discounts
-    'Gameday Special',                       -- Order Discount
-    1                                        -- Is Complete
-);
+SET @CurOrderID = LAST_INSERT_ID();
 
--- Order 5: March 2nd - Pickup by Matt Engers
-CALL AddSingleOrderWithMultiplePizzas(
-    'Matt', 'Engers', '864-474-9953',      -- Customer Info
-    'pickup',                             -- Order Type
-    '2024-03-02 17:30:00',                -- Order DateTime
-    NULL, NULL, NULL, NULL, NULL,         -- Delivery Address (not needed for pickup)
-    NULL,                                 -- Table Number
-    0,                                    -- Is Picked Up
-    1,                                    -- Number of Pizzas
-    'XLarge',                             -- Pizza Size
-    'Gluten-Free',                        -- Pizza Crust
-    'Green Pepper:0,Onion:0,Roma Tomato:0,Mushrooms:0,Black Olives:0,Goat Cheese:0',
-    '27.45',                              -- Customer Price
-    '7.88',                               -- Business Price
-    'Specialty Pizza',                    -- Pizza Discount
-    NULL,                                 -- Order Discount
-    1                                     -- Is Complete
-);
+INSERT INTO dinein VALUES (@CurOrderID, 21);
 
--- Order 6: March 2nd - Delivery by Frank Turner
-CALL AddSingleOrderWithMultiplePizzas(
-    'Frank', 'Turner', '864-232-8944',    -- Customer Info
-    'delivery',                          -- Order Type
-    '2024-03-02 18:17:00',               -- Order DateTime
-    6745, 'Wessex St', 'Anderson', 'SC', 29621, -- Delivery Address
-    NULL,                                -- Table Number
-    NULL,                                -- Is Picked Up
-    1,                                   -- Number of Pizzas
-    'Large',                             -- Pizza Size
-    'Thin',                              -- Pizza Crust
-    'Chicken:0,Green Pepper:0,Onion:0,Mushrooms:0,Four Cheese Blend:1',
-    '25.81',                             -- Customer Price
-    '4.24',                              -- Business Price
-    NULL,                                -- Pizza Discount
-    NULL,                                -- Order Discount
-    1                                    -- Is Complete
-);
+INSERT INTO pizza (pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice, ordertable_OrderID)
+VALUES ('Large', 'Thin', 'completed', '2024-03-05 12:03:00', 19.75, 3.68, @CurOrderID);
 
--- Order 7: April 13th - Delivery by Milo Auckerman
-CALL AddSingleOrderWithMultiplePizzas(
-    'Milo', 'Auckerman', '864-878-5679', -- Customer Info
-    'delivery',                         -- Order Type
-    '2024-04-13 20:32:00',              -- Order DateTime
-    8879, 'Suburban', 'Anderson', 'SC', 29621, -- Delivery Address
-    NULL,                               -- Table Number
-    NULL,                               -- Is Picked Up
-    2,                                  -- Number of Pizzas
-    'Large,Large',                      -- Pizza Sizes
-    'Thin,Thin',                        -- Pizza Crusts
-    'Four Cheese Blend:1|Regular Cheese:0,Pepperoni:1', -- Toppings for each pizza
-    '18.00,19.25',                      -- Customer Prices
-    '2.75,3.25',                        -- Business Prices
-    NULL,                               -- Pizza Discounts
-    'Employee Discount',                -- Order Discount
-    1                                   -- Is Complete
-);
+SET @CurPizzaID = LAST_INSERT_ID();
+
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 13, 1);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 1, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 2, 0);
+
+INSERT INTO pizza_discount VALUES (@CurPizzaID, 3);
+
+COMMIT;
+
+-- order 2
+START TRANSACTION;
+
+INSERT INTO ordertable (customer_CustID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete)
+VALUES (NULL, 'dinein', '2024-04-03 12:05:00', 19.78, 4.63, 1);
+
+SET @CurOrderID = LAST_INSERT_ID();
+
+INSERT INTO dinein VALUES (@CurOrderID, 4);
+
+INSERT INTO pizza (pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice, ordertable_OrderID)
+VALUES ('Medium', 'Pan', 'completed', '2024-04-03 12:05:00', 12.85, 3.23, @CurOrderID);
+
+SET @CurPizzaID = LAST_INSERT_ID();
+
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 15, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 9, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 7, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 8, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 12, 0);
+
+INSERT INTO pizza_discount VALUES (@CurPizzaID, 4);
+
+INSERT INTO pizza (pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice, ordertable_OrderID)
+VALUES ('Small', 'Original', 'completed', '2024-04-03 12:05:00', 6.93, 1.40, @CurOrderID);
+
+SET @CurPizzaID = LAST_INSERT_ID();
+
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 13, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 4, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 12, 0);
+
+INSERT INTO order_discount VALUES (@CurOrderID, 2);
+
+COMMIT;
+
+-- order 3
+START TRANSACTION;
+
+CALL ADDCUSTOMER('Andrew', 'Wilkes-Krier', '8642545861');
+
+SET @CurCustID = LAST_INSERT_ID();
+
+CALL CREATEORDER (@CurCustID, 'pickup', '2024-03-03 21:30:00', 89.28, 19.80, 1);
+
+SET @CurOrderID = LAST_INSERT_ID();
+
+INSERT INTO pickup VALUES (@CurOrderID, 1);
+
+INSERT INTO pizza (pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice, ordertable_OrderID)
+VALUES ('Large', 'Original', 'completed', '2024-03-03 21:30:00', 14.88, 3.30, @CurOrderID);
+
+SET @CurPizzaID = LAST_INSERT_ID();
+
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 13, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 1, 0);
+
+INSERT INTO pizza (pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice, ordertable_OrderID)
+VALUES ('Large', 'Original', 'completed', '2024-03-03 21:30:00', 14.88, 3.30, @CurOrderID);
+
+SET @CurPizzaID = LAST_INSERT_ID();
+
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 13, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 1, 0);
+
+INSERT INTO pizza (pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice, ordertable_OrderID)
+VALUES ('Large', 'Original', 'completed', '2024-03-03 21:30:00', 14.88, 3.30, @CurOrderID);
+
+SET @CurPizzaID = LAST_INSERT_ID();
+
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 13, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 1, 0);
+
+INSERT INTO pizza (pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice, ordertable_OrderID)
+VALUES ('Large', 'Original', 'completed', '2024-03-03 21:30:00', 14.88, 3.30, @CurOrderID);
+
+SET @CurPizzaID = LAST_INSERT_ID();
+
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 13, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 1, 0);
+
+INSERT INTO pizza (pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice, ordertable_OrderID)
+VALUES ('Large', 'Original', 'completed', '2024-03-03 21:30:00', 14.88, 3.30, @CurOrderID);
+
+SET @CurPizzaID = LAST_INSERT_ID();
+
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 13, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 1, 0);
+
+INSERT INTO pizza (pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice, ordertable_OrderID)
+VALUES ('Large', 'Original', 'completed', '2024-03-03 21:30:00', 14.88, 3.30, @CurOrderID);
+
+SET @CurPizzaID = LAST_INSERT_ID();
+
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 13, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 1, 0);
+
+COMMIT;
+
+-- order 4
+START TRANSACTION;
+SELECT customer_CustID INTO @CurCustID
+FROM customer
+WHERE customer_FName = 'Andrew' AND customer_LName = 'Wilkes-Krier' AND customer_PhoneNum = '8642545861'
+LIMIT 1;
+
+INSERT INTO ordertable (customer_CustID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete)
+VALUES (@CurCustID, 'delivery', '2024-04-20 19:11:00', 68.95, 23.62, 1);
+
+SET @CurOrderID = LAST_INSERT_ID();
+
+INSERT INTO delivery VALUES (@CurOrderID, 115, 'Party Blvd', 'Anderson', 'SC', '29621', 1);
+
+-- INSERT INTO order_discount VALUES (@CurOrderID, 6);
+
+INSERT INTO pizza (pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice, ordertable_OrderID)
+VALUES ('XLarge', 'Original', 'completed', '2024-04-20 19:11:00', 27.94, 9.19, @CurOrderID);
+
+SET @CurPizzaID = LAST_INSERT_ID();
+
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 1, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 2, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 14, 0);
+
+INSERT INTO pizza (pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice, ordertable_OrderID)
+VALUES ('XLarge', 'Original', 'completed', '2024-04-20 19:11:00', 31.50, 6.25, @CurOrderID);
+
+SET @CurPizzaID = LAST_INSERT_ID();
+
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 3, 1);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 10, 1);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 14, 0);
+
+INSERT INTO pizza_discount VALUES (@CurPizzaID, 4);
+
+INSERT INTO pizza (pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice, ordertable_OrderID)
+VALUES ('XLarge', 'Original', 'completed', '2024-04-20 19:11:00', 26.75, 8.18, @CurOrderID);
+
+SET @CurPizzaID = LAST_INSERT_ID();
+
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 4, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 17, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 14, 0);
+
+INSERT INTO order_discount VALUES (@CurOrderID, 6);
+
+COMMIT;
+
+-- order 5
+START TRANSACTION;
+
+INSERT INTO customer (customer_FName, customer_LName, customer_PhoneNum)
+VALUES ('Matt', 'Engers', '8644749953');
+
+SET @CurCustID = LAST_INSERT_ID();
+
+INSERT INTO ordertable (customer_CustID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete)
+VALUES (@CurCustID, 'pickup', '2024-03-02 17:30:00', 27.45, 7.88, 1);
+
+SET @CurOrderID = LAST_INSERT_ID();
+
+INSERT INTO pickup VALUES (@CurOrderID, 1);
+
+INSERT INTO pizza (pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice, ordertable_OrderID)
+VALUES ('XLarge', 'Gluten-Free', 'completed', '2024-03-02 17:30:00', 27.45, 7.88, @CurOrderID);
+
+SET @CurPizzaID = LAST_INSERT_ID();
+
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 5, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 6, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 7, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 8, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 9, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 16, 0);
+
+INSERT INTO pizza_discount VALUES (@CurPizzaID, 4);
+
+COMMIT;
+
+-- order 6
+START TRANSACTION;
+
+INSERT INTO customer (customer_FName, customer_LName, customer_PhoneNum)
+VALUES ('Frank', 'Turner', '8642328944');
+
+SET @CurCustID = LAST_INSERT_ID();
+
+INSERT INTO ordertable (customer_CustID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete)
+VALUES (@CurCustID, 'delivery', '2024-03-02 18:17:00', 25.81, 4.24, 1);
+
+SET @CurOrderID = LAST_INSERT_ID();
+
+INSERT INTO delivery VALUES (@CurOrderID, 6745, 'Wessex St', 'Anderson', 'SC', 29621, 1);
+
+INSERT INTO pizza (pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice, ordertable_OrderID)
+VALUES ('Large', 'Thin', 'completed', '2024-03-02 18:17:00', 25.81, 4.24, @CurOrderID);
+
+SET @CurPizzaID = LAST_INSERT_ID();
+
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 4, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 5, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 6, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 8, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 14, 1);
+
+COMMIT;
+
+-- order 7
+START TRANSACTION;
+
+INSERT INTO customer (customer_FName, customer_LName, customer_PhoneNum)
+VALUES ('Milo', 'Auckerman', '8648785679');
+
+SET @CurCustID = LAST_INSERT_ID();
+
+INSERT INTO ordertable (customer_CustID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete)
+VALUES (@CurCustID, 'delivery', '2024-04-13 20:32:00', 31.66, 6.00, 1);
+
+SET @CurOrderID = LAST_INSERT_ID();
+
+INSERT INTO delivery VALUES (@CurOrderID, 8879, 'Suburban', 'Anderson', 'SC', 29621, 1);
+
+-- INSERT INTO order_discount VALUES (@CurOrderID, 1);
+
+INSERT INTO pizza (pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice, ordertable_OrderID)
+VALUES ('Large', 'Thin', 'completed', '2024-04-13 20:32:00', 18.00, 2.75, @CurOrderID);
+
+SET @CurPizzaID = LAST_INSERT_ID();
+
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 14, 1);
+
+INSERT INTO pizza (pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice, ordertable_OrderID)
+VALUES ('Large', 'Thin', 'completed', '2024-04-13 20:32:00', 19.25, 3.25, @CurOrderID);
+
+SET @CurPizzaID = LAST_INSERT_ID();
+
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 13, 0);
+INSERT INTO pizza_topping VALUES (@CurPizzaID, 1, 1);
+
+INSERT INTO order_discount VALUES (@CurOrderID, 1);
+
+COMMIT;
+
