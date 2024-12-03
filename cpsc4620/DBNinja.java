@@ -380,9 +380,10 @@ public final class DBNinja {
 									String City = rsDel.getString("delivery_City");
 									String State = rsDel.getString("delivery_State");
 									String Zip = rsDel.getString("delivery_Zip");
+									boolean isDelivered = rsDel.getBoolean("delivery_IsDelivered");
 									String address = HouseNum + "\t" + Street + "\t" + City + "\t" + State + "\t" + Zip;
 									order =
-											new DeliveryOrder(orderId, custId, date, custPrice, busPrice, isComplete, address);
+											new DeliveryOrder(orderId, custId, date, custPrice, busPrice, isComplete, address, isDelivered);
 								}
 							} finally {
 								if(conn != null){
@@ -839,12 +840,13 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 		ArrayList<Topping> toppings = new ArrayList<>();
 		try{
 			connect_to_db();
-			if(!connect_to_db()) {
+			if(conn != null) {
 				String query = "SELECT t.*, pt.pizza_topping_IsDouble " +
 						"FROM pizza_topping pt " +
 						"JOIN topping t ON pt.topping_TopID = t.topping_TopID " +
 						"WHERE pt.pizza_PizzaID = ?";
 				PreparedStatement stmt = conn.prepareStatement(query);
+				System.out.println("PizzaID: " + p.getPizzaID());
 				stmt.setInt(1, p.getPizzaID());
 				ResultSet rs = stmt.executeQuery();
 				while(rs.next()) {
@@ -870,7 +872,8 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 				conn.close();
 			}
 		}
-
+		System.out.println("Toppings");
+		System.out.println(toppings);
 		return toppings;
 	}
 
@@ -914,7 +917,7 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 				// Add toppings to the pizza
 				ArrayList<Topping> toppings = getToppingsOnPizza(pizza);
 				for(Topping t : toppings) {
-					pizza.addToppings(t, false);  // We'll need to update this if we track "extra" toppings
+					pizza.addToppings(t, t.getDoubled());  // We'll need to update this if we track "extra" toppings
 				}
 
 				// Add discounts to the pizza
