@@ -204,7 +204,7 @@ VALUES (@CurCustID, 'delivery', '2024-04-20 19:11:00', 68.95, 23.62, 1);
 
 SET @CurOrderID = LAST_INSERT_ID();
 
-INSERT INTO delivery VALUES (@CurOrderID, 115, 'Party Blvd', 'Anderson', 'SC', '29621', 1);
+INSERT INTO delivery VALUES (@CurOrderID, 115, 'Party Blvd', 'Anderson', 'SC', '29621', 0);
 
 -- INSERT INTO order_discount VALUES (@CurOrderID, 6);
 
@@ -285,7 +285,7 @@ VALUES (@CurCustID, 'delivery', '2024-03-02 18:17:00', 25.81, 4.24, 1);
 
 SET @CurOrderID = LAST_INSERT_ID();
 
-INSERT INTO delivery VALUES (@CurOrderID, 6745, 'Wessex St', 'Anderson', 'SC', 29621, 1);
+INSERT INTO delivery VALUES (@CurOrderID, 6745, 'Wessex St', 'Anderson', 'SC', 29621, 0);
 
 INSERT INTO pizza (pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, pizza_CustPrice, pizza_BusPrice, ordertable_OrderID)
 VALUES ('Large', 'Thin', 'completed', '2024-03-02 18:17:00', 25.81, 4.24, @CurOrderID);
@@ -313,7 +313,7 @@ VALUES (@CurCustID, 'delivery', '2024-04-13 20:32:00', 31.66, 6.00, 1);
 
 SET @CurOrderID = LAST_INSERT_ID();
 
-INSERT INTO delivery VALUES (@CurOrderID, 8879, 'Suburban', 'Anderson', 'SC', 29621, 1);
+INSERT INTO delivery VALUES (@CurOrderID, 8879, 'Suburban', 'Anderson', 'SC', 29621, 0);
 
 -- INSERT INTO order_discount VALUES (@CurOrderID, 1);
 
