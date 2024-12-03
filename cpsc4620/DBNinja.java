@@ -109,33 +109,42 @@ public final class DBNinja {
 				throw new SQLException("Failed to retrieve generated OrderID.");
 			}
 			// 2. Handle order type specific tables
-			if (o instanceof DeliveryOrder delivery) {
-                String deliverySQL = "INSERT INTO delivery (ordertable_OrderID, delivery_HouseNum, delivery_Street, delivery_City, delivery_State, delivery_Zip, delivery_IsDelivered) VALUES (?, ?, ?, ?, ?, ?, ?)";
-				pstmt = conn.prepareStatement(deliverySQL);
-				String[] addressParts = delivery.getAddress().split("\t");
-				if (addressParts.length != 5) {
-					throw new SQLException("Invalid address format for delivery order: " + delivery.getAddress());
-				}
-				pstmt.setInt(1, generatedOrderID);
-				pstmt.setString(2, addressParts[0]); // House number
-				pstmt.setString(3, addressParts[1]); // Street
-				pstmt.setString(4, addressParts[2]); // City
-				pstmt.setString(5, addressParts[3]); // State
-				pstmt.setString(6, addressParts[4]); // Zip
-				pstmt.setBoolean(7, delivery.getIsComplete());
-				pstmt.executeUpdate();
-			} else if (o instanceof DineinOrder dineIn) {
-                String dineinSQL = "INSERT INTO dinein (ordertable_OrderID, dinein_TableNum) VALUES (?, ?)";
-				pstmt = conn.prepareStatement(dineinSQL);
-				pstmt.setInt(1, generatedOrderID);
-				pstmt.setInt(2, dineIn.getTableNum());
-				pstmt.executeUpdate();
-			} else if (o instanceof PickupOrder) {
-				String pickupSQL = "INSERT INTO pickup (ordertable_OrderID, pickup_IsPickedUp) VALUES (?, ?)";
-				pstmt = conn.prepareStatement(pickupSQL);
-				pstmt.setInt(1, generatedOrderID);
-				pstmt.setBoolean(2, false);
-				pstmt.executeUpdate();
+			String orderType = o.getOrderType();
+			switch (orderType) {
+				case "Delivery":
+					DeliveryOrder delivery = (DeliveryOrder) o;
+					String deliverySQL = "INSERT INTO delivery (ordertable_OrderID, delivery_HouseNum, delivery_Street, delivery_City, delivery_State, delivery_Zip, delivery_IsDelivered) VALUES (?, ?, ?, ?, ?, ?, ?)";
+					pstmt = conn.prepareStatement(deliverySQL);
+					String[] addressParts = delivery.getAddress().split("\t");
+					if (addressParts.length != 5) {
+						throw new SQLException("Invalid address format for delivery order: " + delivery.getAddress());
+					}
+					pstmt.setInt(1, generatedOrderID);
+					pstmt.setString(2, addressParts[0]); // House number
+					pstmt.setString(3, addressParts[1]); // Street
+					pstmt.setString(4, addressParts[2]); // City
+					pstmt.setString(5, addressParts[3]); // State
+					pstmt.setString(6, addressParts[4]); // Zip
+					pstmt.setBoolean(7, delivery.getIsComplete());
+					pstmt.executeUpdate();
+					break;
+				case "Pickup":
+					String pickupSQL = "INSERT INTO pickup (ordertable_OrderID, pickup_IsPickedUp) VALUES (?, ?)";
+					pstmt = conn.prepareStatement(pickupSQL);
+					pstmt.setInt(1, generatedOrderID);
+					pstmt.setBoolean(2, false);
+					pstmt.executeUpdate();
+					break;
+				case "DineIn":
+					DineinOrder dineIn = (DineinOrder) o;
+					String dineinSQL = "INSERT INTO dinein (ordertable_OrderID, dinein_TableNum) VALUES (?, ?)";
+					pstmt = conn.prepareStatement(dineinSQL);
+					pstmt.setInt(1, generatedOrderID);
+					pstmt.setInt(2, dineIn.getTableNum());
+					pstmt.executeUpdate();
+					break;
+				default:
+					throw new SQLException("Unknown order type: " + orderType);
 			}
 
 			// 3. Add pizzas and their details

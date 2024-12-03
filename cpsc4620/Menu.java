@@ -18,7 +18,7 @@ import java.util.Date;
  */
 
 
-public class TestMenu {
+public class Menu {
 	public static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
 	public static void main(String[] args) throws SQLException, IOException {
@@ -82,7 +82,7 @@ public class TestMenu {
 			customerID = Integer.parseInt(reader.readLine());
 		}//yes existing customer
 		else if (yn.contains("n")) {
-			customerID = TestMenu.EnterCustomer();
+			customerID = Menu.EnterCustomer();
 		}//no existing customer
 		else {
 			customerID = -1;
