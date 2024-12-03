@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /*
  * This file is where the front end magic happens.  You should NOT make any changes to this file.
@@ -19,7 +18,7 @@ import java.util.List;
  */
 
 
-public class Menu {
+public class TestMenu {
 	public static BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
 
 	public static void main(String[] args) throws SQLException, IOException {
@@ -83,7 +82,7 @@ public class Menu {
 			customerID = Integer.parseInt(reader.readLine());
 		}//yes existing customer
 		else if (yn.contains("n")) {
-			customerID = Menu.EnterCustomer();
+			customerID = TestMenu.EnterCustomer();
 		}//no existing customer
 		else {
 			customerID = -1;
