@@ -846,7 +846,6 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 						"JOIN topping t ON pt.topping_TopID = t.topping_TopID " +
 						"WHERE pt.pizza_PizzaID = ?";
 				PreparedStatement stmt = conn.prepareStatement(query);
-				System.out.println("PizzaID: " + p.getPizzaID());
 				stmt.setInt(1, p.getPizzaID());
 				ResultSet rs = stmt.executeQuery();
 				while(rs.next()) {
@@ -872,8 +871,6 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 				conn.close();
 			}
 		}
-		System.out.println("Toppings");
-		System.out.println(toppings);
 		return toppings;
 	}
 
