@@ -156,11 +156,19 @@ public final class DBNinja {
 
 			// 4. Add order discounts
 			for (Discount d : o.getDiscountList()) {
-				String discountSQL = "INSERT INTO order_discount (ordertable_OrderID, discount_DiscountID) VALUES (?, ?)";
-				pstmt = conn.prepareStatement(discountSQL);
-				pstmt.setInt(1, generatedOrderID);
-				pstmt.setInt(2, d.getDiscountID());
-				pstmt.executeUpdate();
+				try {
+					connect_to_db();
+					String discountSQL = "INSERT INTO order_discount (ordertable_OrderID, discount_DiscountID) VALUES (?, ?)";
+					pstmt = conn.prepareStatement(discountSQL);
+					pstmt.setInt(1, generatedOrderID);
+					pstmt.setInt(2, d.getDiscountID());
+					pstmt.executeUpdate();
+				} finally {
+					if (conn != null) {
+						conn.close();
+					}
+				}
+
 			}
 }
 		} finally {
@@ -246,12 +254,11 @@ public final class DBNinja {
 		try {
 			connect_to_db();
 			if(conn != null) {
-				String sql = "INSERT INTO customer (customer_CustID, customer_FName, customer_LName, customer_PhoneNum) VALUES (?, ?, ?, ?)";
+				String sql = "INSERT INTO customer (customer_FName, customer_LName, customer_PhoneNum) VALUES ( ?, ?, ?)";
 				PreparedStatement pstmt = conn.prepareStatement(sql);
-				pstmt.setInt(1, c.getCustID());
-				pstmt.setString(2, c.getFName());
-				pstmt.setString(3, c.getLName());
-				pstmt.setString(4, c.getPhone());
+				pstmt.setString(1, c.getFName());
+				pstmt.setString(2, c.getLName());
+				pstmt.setString(3, c.getPhone());
 				pstmt.executeUpdate();
 
 			}
@@ -684,7 +691,7 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 			String query = "SELECT * FROM customer ORDER BY customer_LName";
 			Statement stmt = conn.createStatement();
 			ResultSet rs = stmt.executeQuery(query);
-			System.out.println(rs);
+//			System.out.println(rs);
 			while (rs.next()) {
 				int id = rs.getInt("customer_CustID");
 				String fName = rs.getString("customer_FName");
@@ -1011,8 +1018,8 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 		 *
 		 */
 		double baseCustPrice = 0.0;
-		System.out.println("Size: " + size);
-		System.out.println("Crust: " + crust);
+//		System.out.println("Size: " + size);
+//		System.out.println("Crust: " + crust);
 		try {
 			connect_to_db();
 			if(conn != null) {
