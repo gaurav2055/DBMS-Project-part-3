@@ -894,7 +894,7 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 		ArrayList<Pizza> pizzas = new ArrayList<>();
 
 		try {
-			String query = "SELECT * FROM pizza WHERE ordertable_OrderID = ? ORDER BY pizza_PizzaID";
+			String query = "SELECT pizza_PizzaID, pizza_Size, pizza_CrustType, pizza_PizzaState, pizza_PizzaDate, ROUND(pizza_CustPrice, 2) AS pizza_CustPrice, ROUND(pizza_BusPrice, 2) AS pizza_BusPrice, ordertable_OrderID FROM pizza WHERE ordertable_OrderID = ? ORDER BY pizza_PizzaID";
 			PreparedStatement pstmt = conn.prepareStatement(query);
 			pstmt.setInt(1, o.getOrderID());
 			ResultSet rs = pstmt.executeQuery();
@@ -1011,6 +1011,8 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 		 *
 		 */
 		double baseCustPrice = 0.0;
+		System.out.println("Size: " + size);
+		System.out.println("Crust: " + crust);
 		try {
 			connect_to_db();
 			if(conn != null) {
@@ -1020,7 +1022,7 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 				pstmt.setString(2, crust);
 				ResultSet rs = pstmt.executeQuery();
 				if (rs.next()) {
-					baseCustPrice = rs.getDouble("baseprice_CustPrice");
+					baseCustPrice =  rs.getDouble("baseprice_CustPrice");
 				}
 			}
 			}finally {
