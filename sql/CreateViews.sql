@@ -20,7 +20,7 @@ CREATE VIEW ToppingPopularity AS
 CREATE VIEW ProfitByPizza AS
     SELECT pizza_Size AS Size,
            pizza_CrustType AS Crust,
-           SUM(pizza_CustPrice - pizza_BusPrice) AS Profit,
+           ROUND(SUM(pizza_CustPrice - pizza_BusPrice),2) AS Profit,
            DATE_FORMAT(pizza_PizzaDate, '%c/%Y') AS OrderMonth
     FROM pizza
     GROUP BY pizza_Size, pizza_CrustType, `OrderMonth`
