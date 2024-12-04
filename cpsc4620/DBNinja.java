@@ -339,7 +339,7 @@ public final class DBNinja {
 
 					case PICKEDUP:
 						// Update pickup status
-						String pickupSQL = "UPDATE pickup SET pickup_IsPickedUp = true WHERE ordertable_OrderID = ?";
+						String pickupSQL = "UPDATE ordertable SET ordertable_isComplete = true WHERE ordertable_OrderID = ?";
 						pstmt = conn.prepareStatement(pickupSQL);
 						pstmt.setInt(1, ordertable_OrderID);
 						pstmt.executeUpdate();
@@ -906,7 +906,28 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 		 * If it's not found....then return null
 		 *
 		 */
-		return null;
+		Customer customer = null;
+		try {
+			connect_to_db();
+			if (conn != null) {
+				String query = "SELECT * FROM customer WHERE customer_PhoneNum = ?";
+				PreparedStatement pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, phoneNumber);
+				ResultSet rs = pstmt.executeQuery();
+				if (rs.next()) {
+					int id = rs.getInt("customer_CustID");
+					String fName = rs.getString("customer_FName");
+					String lName = rs.getString("customer_LName");
+					String phone = rs.getString("customer_PhoneNum");
+					customer = new Customer(id, fName, lName, phone);
+				}
+			}
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return customer;
 	}
 
 	public static String getCustomerName(int CustID) throws SQLException, IOException
