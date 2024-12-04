@@ -1284,15 +1284,16 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 			ResultSet rs = pstmt.executeQuery();
 
 			//Print Header
-			System.out.printf("%-30s %-10s\n", "Topping", "ToppingCount");
-			System.out.println("--------------------------------------------------");
+			System.out.printf("%-20s %-15s\n", "Topping", "ToppingCount");
+			System.out.printf("%-20s %15s\n", "--------", "-------------");
+
 			//Print row
 			while (rs.next()) {
 				String toppingName = rs.getString("Topping");
 				int usedCount = rs.getInt("ToppingCount");
 
 				// Format and print the row
-				System.out.printf("%-30s %-10d\n", toppingName, usedCount);
+				System.out.printf("%-20s %-15d\n", toppingName, usedCount);
 			}
 		} finally {
 			if(conn != null) {
@@ -1323,17 +1324,17 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 			ResultSet rs = pstmt.executeQuery();
 
 			//Print Header
-			System.out.printf("%-30s %-10s %-10s %-10s\n", "Size", "Crust", "Profit", "OrderMonth");
-			System.out.println("--------------------------------------------------");
+			System.out.printf("%-15s %-15s %-15s %-15s\n", "Size", "Crust", "Profit", "OrderMonth");
+			System.out.printf("%-15s %-15s %-15s %-15s\n", "----", "-----", "------", "----------");
 			//Print row
 			while (rs.next()) {
 				String Size = rs.getString("Size");
-				int Crust = rs.getInt("Crust");
+				String Crust = rs.getString("Crust");
 				double Profit = rs.getDouble("Profit");
 				String OrderMonth = rs.getString("Size");
 
 				// Format and print the row
-				System.out.printf("%-30s %-10d %-10f %-10s\n", Size, Crust, Profit, OrderMonth);
+				System.out.printf("%-15s %-15S %-15f %-15s\n", Size, Crust, Profit, OrderMonth);
 			}
 		} finally {
 			if(conn != null) {
@@ -1364,7 +1365,7 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 			ResultSet rs = pstmt.executeQuery();
 
 			//Print Header
-			System.out.printf("%-30s %-10s %-10s %-10s %-10s\n", "customerType", "OrderMonth", "TotalOrderPrice", "TotalOrderCost", "Profit");
+			System.out.printf("%-15s %-15s %-15s %-15s %-15s\n", "customerType", "OrderMonth", "TotalOrderPrice", "TotalOrderCost", "Profit");
 			System.out.println("--------------------------------------------------");
 			//Print row
 			while (rs.next()) {
@@ -1375,7 +1376,7 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 				double profit = rs.getDouble("Profit");
 
 				// Format and print the row
-				System.out.printf("%-30s %-10s %-10s %-10s %-10s\n", customerType, OrderMonth, TotalOrderPrice, TotalOrderCost, profit);
+				System.out.printf("%-15s %-15s %-15s %-15s %-10s\n", customerType == null ? "" : customerType, OrderMonth, TotalOrderPrice, TotalOrderCost, profit);
 			}
 		} finally {
 			if(conn != null) {
