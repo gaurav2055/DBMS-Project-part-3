@@ -968,7 +968,35 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 		 * If it's not found....then return null
 		 *
 		 */
-		return null;
+		Topping topping = null;
+		try {
+			connect_to_db();
+			if(conn != null) {
+				String query = "SELECT * FROM topping WHERE topping_TopName = ?";
+				PreparedStatement os = conn.prepareStatement(query);
+				os.setString(1, name);
+				ResultSet rs = os.executeQuery();
+				while(rs.next()) {
+					int id = rs.getInt("topping_TopID");
+					String topName = rs.getString("topping_TopName");
+					float smallAMT = rs.getFloat("topping_SmallAMT");
+					float medAMT = rs.getFloat("topping_MedAMT");
+					float largeAMT = rs.getFloat("topping_LgAMT");
+					float xlAMT = rs.getFloat("topping_XLAMT");
+					float custPrice = rs.getFloat("topping_CustPrice");
+					float busPrice = rs.getFloat("topping_BusPrice");
+					int minINVT = rs.getInt("topping_MinINVT");
+					int curINVT = rs.getInt("topping_CurINVT");
+
+					topping = new Topping(id, topName, smallAMT, medAMT, largeAMT, xlAMT, custPrice, busPrice, minINVT, curINVT);
+				}
+			}
+		} finally {
+			if(conn != null) {
+				conn.close();
+			}
+		}
+		return topping;
 	}
 
 	public static ArrayList<Topping> getToppingsOnPizza(Pizza p) throws SQLException, IOException
@@ -1237,16 +1265,15 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 			ResultSet rs = pstmt.executeQuery();
 
 			//Print Header
-			System.out.printf("%-30s %-10s %-10s\n", "Topping Name", "Used", "Doubled");
+			System.out.printf("%-30s %-10s\n", "Topping", "ToppingCount");
 			System.out.println("--------------------------------------------------");
 			//Print row
 			while (rs.next()) {
-				String toppingName = rs.getString("topping_TopName");
-				int usedCount = rs.getInt("Used");
-				int doubledCount = rs.getInt("Doubled");
+				String toppingName = rs.getString("Topping");
+				int usedCount = rs.getInt("ToppingCount");
 
 				// Format and print the row
-				System.out.printf("%-30s %-10d %-10d\n", toppingName, usedCount, doubledCount);
+				System.out.printf("%-30s %-10d\n", toppingName, usedCount);
 			}
 		} finally {
 			if(conn != null) {
@@ -1272,21 +1299,22 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 		 */
 		try {
 			connect_to_db();
-			String query ="SELECT * FROM ToppingPopularity";
+			String query ="SELECT * FROM ProfitByPizza";
 			PreparedStatement pstmt = conn.prepareStatement(query);
 			ResultSet rs = pstmt.executeQuery();
 
 			//Print Header
-			System.out.printf("%-30s %-10s %-10s\n", "Topping Name", "Used", "Doubled");
+			System.out.printf("%-30s %-10s %-10s %-10s\n", "Size", "Crust", "Profit, OrderMonth");
 			System.out.println("--------------------------------------------------");
 			//Print row
 			while (rs.next()) {
-				String toppingName = rs.getString("topping_TopName");
-				int usedCount = rs.getInt("Used");
-				int doubledCount = rs.getInt("Doubled");
+				String Size = rs.getString("Size");
+				int Crust = rs.getInt("Crust");
+				double Profit = rs.getDouble("Profit");
+				String OrderMonth = rs.getString("Size");
 
 				// Format and print the row
-				System.out.printf("%-30s %-10d %-10d\n", toppingName, usedCount, doubledCount);
+				System.out.printf("%-30s %-10d %-10f %-10s\n", Size, Crust, Profit, OrderMonth);
 			}
 		} finally {
 			if(conn != null) {
@@ -1312,7 +1340,7 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 		 */
 		try {
 			connect_to_db();
-			String query ="SELECT * FROM profitbyordertype";
+			String query ="SELECT * FROM ProfitByOrderType";
 			PreparedStatement pstmt = conn.prepareStatement(query);
 			ResultSet rs = pstmt.executeQuery();
 
