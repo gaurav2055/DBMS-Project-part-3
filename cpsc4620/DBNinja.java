@@ -255,7 +255,7 @@ public final class DBNinja {
 						default:
 							toppingAmt = 1;
 					}
-					addToInventory(t.getTopID(),t.getDoubled() ? (-2*toppingAmt): (-1*toppingAmt));
+					addToInventory(t.getTopID(), isDouble ? (-2*toppingAmt): (-1*toppingAmt));
 				}
 
 				// 3. Add pizza discounts
