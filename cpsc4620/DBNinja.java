@@ -270,16 +270,23 @@ public final class DBNinja {
 		 * This method adds a new customer to the database.
 		 *
 		 */
-
+		int generatedCustID = -1;
 		try {
 			connect_to_db();
 			if(conn != null) {
 				String sql = "INSERT INTO customer (customer_FName, customer_LName, customer_PhoneNum) VALUES ( ?, ?, ?)";
-				PreparedStatement pstmt = conn.prepareStatement(sql);
+				PreparedStatement pstmt = conn.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 				pstmt.setString(1, c.getFName());
 				pstmt.setString(2, c.getLName());
 				pstmt.setString(3, c.getPhone());
 				pstmt.executeUpdate();
+				ResultSet generatedKeys = pstmt.getGeneratedKeys();
+
+				if (generatedKeys.next()) {
+					generatedCustID = generatedKeys.getInt(1); // Retrieve the generated key
+				} else {
+					throw new SQLException("Failed to retrieve generated OrderID.");
+				}
 
 			}
 		} finally {
@@ -288,7 +295,7 @@ public final class DBNinja {
 			}
 		}
 //		return -1;
-		return c.getCustID();
+		return generatedCustID;
 	}
 
 	public static void completeOrder(int ordertable_OrderID, order_state newState ) throws SQLException, IOException
@@ -1030,8 +1037,8 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 					float medAMT = rs.getFloat("topping_MedAMT");
 					float largeAMT = rs.getFloat("topping_LgAMT");
 					float xlAMT = rs.getFloat("topping_XLAMT");
-					float custPrice = rs.getFloat("topping_CustPrice");
-					float busPrice = rs.getFloat("topping_BusPrice");
+					double custPrice = rs.getDouble("topping_CustPrice");
+					double busPrice = rs.getDouble("topping_BusPrice");
 					int minINVT = rs.getInt("topping_MinINVT");
 					int curINVT = rs.getInt("topping_CurINVT");
 
