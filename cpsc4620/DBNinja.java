@@ -339,7 +339,7 @@ public final class DBNinja {
 
 					case PICKEDUP:
 						// Update pickup status
-						String pickupSQL = "UPDATE ordertable SET ordertable_isComplete = true WHERE ordertable_OrderID = ?";
+						String pickupSQL = "UPDATE pickup SET pickup_IsPickedUp = true WHERE ordertable_OrderID = ?";
 						pstmt = conn.prepareStatement(pickupSQL);
 						pstmt.setInt(1, ordertable_OrderID);
 						pstmt.executeUpdate();
@@ -350,7 +350,6 @@ public final class DBNinja {
 			conn.close();
 		}
 	}
-
 
 	public static ArrayList<Order> getOrders(int status) throws SQLException, IOException
 	{
@@ -489,113 +488,6 @@ public final class DBNinja {
 		return orders;
 //		return null;
 	}
-
-//public static ArrayList<Order> getOrders(int status) throws SQLException, IOException
-//{
-//	/*
-//	 * Return an ArrayList of orders.
-//	 * 	status   == 1 => return a list of open (ie oder is not completed)
-//	 *           == 2 => return a list of completed orders (ie order is complete)
-//	 *           == 3 => return a list of all the orders
-//	 * Remember that in Java, we account for supertypes and subtypes
-//	 * which means that when we create an arrayList of orders, that really
-//	 * means we have an arrayList of dineinOrders, deliveryOrders, and pickupOrders.
-//	 *
-//	 * You must fully populate the Order object, this includes order discounts,
-//	 * and pizzas along with the toppings and discounts associated with them.
-//	 *
-//	 * Don't forget to order the data coming from the database appropriately.
-//	 *
-//	 */
-//	ArrayList<Order> orders = new ArrayList<>();
-//
-//	// Only proceed if we can connect to the database
-//
-//	try {
-//		connect_to_db();
-//		if (conn != null) {
-//			String query = "SELECT o.ordertable_OrderID, c.customer_CustID , " +
-//					"c.customer_FName, c.customer_LName, " +
-//					"o.ordertable_OrderType, o.ordertable_OrderDateTime, " +
-//					"o.ordertable_CustPrice, o.ordertable_BusPrice, o.ordertable_IsComplete," +
-//					"d.delivery_HouseNum, d.delivery_Street, d.delivery_City, " +
-//					"d.delivery_State, d.delivery_Zip, d.delivery_IsDelivered, " +
-//					"di.dinein_TableNum, p.pickup_IsPickedUp " +
-//					"FROM ordertable o " +
-//					"LEFT JOIN customer c ON o.customer_CustID = c.customer_CustID " +
-//					"LEFT JOIN delivery d ON o.ordertable_OrderID = d.ordertable_OrderID " +
-//					"LEFT JOIN dinein di ON o.ordertable_OrderID = di.ordertable_OrderID " +
-//					"LEFT JOIN pickup p ON o.ordertable_OrderID = p.ordertable_OrderID " +
-//					"ORDER BY o.ordertable_OrderDateTime";
-//			PreparedStatement pstmt = conn.prepareStatement(query);
-//			ResultSet rs = pstmt.executeQuery();
-//
-//			while (rs.next()) {
-//				int orderId = rs.getInt("ordertable_OrderID");
-//				int custId = rs.getInt("customer_CustID");
-//				String orderType = rs.getString("ordertable_OrderType");
-//				String date = rs.getString("ordertable_OrderDateTime");
-//				double custPrice = rs.getDouble("ordertable_CustPrice");
-//				double busPrice = rs.getDouble("ordertable_BusPrice");
-//				boolean isComplete = rs.getBoolean("ordertable_IsComplete");
-//
-//				Order order = null;
-//
-//				// Create appropriate order type based on orderType
-//				switch (orderType) {
-//					case "delivery":
-//								String HouseNum = rs.getString("delivery_HouseNum");
-//								String Street = rs.getString("delivery_Street");
-//								String City = rs.getString("delivery_City");
-//								String State = rs.getString("delivery_State");
-//								String Zip = rs.getString("delivery_Zip");
-//								String address = HouseNum + "\t" + Street + "\t" + City + "\t" + State + "\t" + Zip;
-//								order =
-//										new DeliveryOrder(orderId, custId, date, custPrice, busPrice, isComplete, address);
-//
-//						break;
-//
-//					case "dinein":
-//
-//								int tableNum = rs.getInt("dinein_TableNum");
-//								order =
-//										new DineinOrder(orderId, custId, date, custPrice, busPrice, isComplete, tableNum);
-//
-//						break;
-//
-//					case "pickup":
-//
-//								boolean isPickedUp = rs.getBoolean("pickup_IsPickedUp");
-//								order =
-//										new PickupOrder(orderId, custId, date, custPrice, busPrice, isPickedUp, isComplete);
-//
-//
-//						break;
-//				}
-//
-//				if (order != null) {
-//					// Add pizzas to the order
-//					ArrayList<Pizza> pizzas = getPizzas(order);
-//					order.setPizzaList(pizzas);
-//
-//					// Add discounts to the order
-//					ArrayList<Discount> discounts = getDiscounts(order);
-//					order.setDiscountList(discounts);
-//
-//					orders.add(order);
-//				}
-//			}
-//		}
-//	} finally {
-//		// Only try to close if connection exists
-//		if (conn != null) {
-//			conn.close();
-//		}
-//	}
-//
-//	return orders;
-////		return null;
-//}
 
 	public static Order getLastOrder() throws SQLException, IOException
 	{
@@ -810,32 +702,32 @@ public final class DBNinja {
 		return orders;
 	}
 
-public static ArrayList<Discount> getDiscountList() throws SQLException, IOException
-{
+	public static ArrayList<Discount> getDiscountList() throws SQLException, IOException
+	{
 
-	/*
-	//		 * Query the database for all the available discounts and
-	//		 * return them in an arrayList of discounts ordered by discount name.
-	//		 *
-	//
-	*/
-	ArrayList<Discount> discounts = new ArrayList<>();
-	if(connect_to_db()) {  // Check if connection is successful
-		String query = "SELECT * FROM discount ORDER BY discount_DiscountName";
-		Statement stmt = conn.createStatement();
-		ResultSet rs = stmt.executeQuery(query);
-		while (rs.next()){
-			int ID = rs.getInt("discount_DiscountID");
-			String discountName = rs.getString("discount_DiscountName");
-			float amt = rs.getFloat("discount_Amount");
-			boolean isPercent = rs.getBoolean("discount_IsPercent");
-			Discount dis = new Discount(ID, discountName, amt, isPercent);
-			discounts.add(dis);
+		/*
+		//		 * Query the database for all the available discounts and
+		//		 * return them in an arrayList of discounts ordered by discount name.
+		//		 *
+		//
+		*/
+		ArrayList<Discount> discounts = new ArrayList<>();
+		if(connect_to_db()) {  // Check if connection is successful
+			String query = "SELECT * FROM discount ORDER BY discount_DiscountName";
+			Statement stmt = conn.createStatement();
+			ResultSet rs = stmt.executeQuery(query);
+			while (rs.next()){
+				int ID = rs.getInt("discount_DiscountID");
+				String discountName = rs.getString("discount_DiscountName");
+				float amt = rs.getFloat("discount_Amount");
+				boolean isPercent = rs.getBoolean("discount_IsPercent");
+				Discount dis = new Discount(ID, discountName, amt, isPercent);
+				discounts.add(dis);
+			}
+			conn.close();
 		}
-		conn.close();
+		return discounts;
 	}
-	return discounts;
-}
 
 	public static Discount findDiscountByName(String name) throws SQLException, IOException
 	{
