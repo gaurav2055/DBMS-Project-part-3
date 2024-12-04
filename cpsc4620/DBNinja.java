@@ -219,22 +219,41 @@ public final class DBNinja {
 
 				// 2. Add toppings for this pizza
 				for (Topping t : p.getToppings()) {
-					String toppingSQL = "INSERT INTO pizza_topping (pizza_PizzaID, topping_TopID, pizza_topping_IsDouble) VALUES (?, ?, ?)";
-					pstmt = conn.prepareStatement(toppingSQL);
-					pstmt.setInt(1, generatedPizzaID);
-					pstmt.setInt(2, t.getTopID());
-					pstmt.setBoolean(3, t.getDoubled());
-					pstmt.executeUpdate();
-					addToInventory(t.getTopID(),t.getDoubled() ? -2: -1);
+					try {
+						connect_to_db();
+						if(conn != null){
+							String toppingSQL = "INSERT INTO pizza_topping (pizza_PizzaID, topping_TopID, pizza_topping_IsDouble) VALUES (?, ?, ?)";
+							pstmt = conn.prepareStatement(toppingSQL);
+							pstmt.setInt(1, generatedPizzaID);
+							pstmt.setInt(2, t.getTopID());
+							pstmt.setBoolean(3, t.getDoubled());
+							pstmt.executeUpdate();
+//					addToInventory(t.getTopID(),t.getDoubled() ? -2: -1);
+						}
+					} finally {
+						if (conn != null) {
+							conn.close();
+						}
+					}
 				}
 
 				// 3. Add pizza discounts
 				for (Discount di : p.getDiscounts()) {
-					String discountSQL = "INSERT INTO pizza_discount (pizza_PizzaID, discount_DiscountID) VALUES (?, ?)";
-					pstmt = conn.prepareStatement(discountSQL);
-					pstmt.setInt(1, generatedPizzaID);
-					pstmt.setInt(2, di.getDiscountID());
-					pstmt.executeUpdate();
+					try {
+						connect_to_db();
+						if(conn != null){
+							String discountSQL = "INSERT INTO pizza_discount (pizza_PizzaID, discount_DiscountID) VALUES (?, ?)";
+							pstmt = conn.prepareStatement(discountSQL);
+							pstmt.setInt(1, generatedPizzaID);
+							pstmt.setInt(2, di.getDiscountID());
+							pstmt.executeUpdate();
+						}
+					} finally {
+						if (conn != null) {
+							conn.close();
+						}
+					}
+
 				}
 			}
 		} finally {
@@ -1304,7 +1323,7 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 			ResultSet rs = pstmt.executeQuery();
 
 			//Print Header
-			System.out.printf("%-30s %-10s %-10s %-10s\n", "Size", "Crust", "Profit, OrderMonth");
+			System.out.printf("%-30s %-10s %-10s %-10s\n", "Size", "Crust", "Profit", "OrderMonth");
 			System.out.println("--------------------------------------------------");
 			//Print row
 			while (rs.next()) {
@@ -1352,7 +1371,7 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 				String customerType = rs.getString("customerType");
 				String OrderMonth = rs.getString("OrderMonth");
 				double TotalOrderPrice = rs.getDouble("TotalOrderPrice");
-				double TotalOrderCost = rs.getDouble("");
+				double TotalOrderCost = rs.getDouble("TotalOrderCost");
 				double profit = rs.getDouble("Profit");
 
 				// Format and print the row
