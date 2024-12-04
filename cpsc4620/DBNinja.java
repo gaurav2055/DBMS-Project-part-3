@@ -228,7 +228,7 @@ public final class DBNinja {
 							pstmt.setInt(2, t.getTopID());
 							pstmt.setBoolean(3, t.getDoubled());
 							pstmt.executeUpdate();
-//					addToInventory(t.getTopID(),t.getDoubled() ? -2: -1);
+							addToInventory(t.getTopID(),t.getDoubled() ? -2: -1);
 						}
 					} finally {
 						if (conn != null) {
@@ -369,7 +369,7 @@ public final class DBNinja {
 		try {
 			connect_to_db();
 			if (conn != null) {
-				String query = "SELECT * FROM ordertable WHERE " +
+				String query = "SELECT ordertable_OrderID, customer_CustID, ordertable_OrderType, ordertable_OrderDateTime, ROUND(ordertable_CustPrice,2) AS ordertable_CustPrice, ROUND(ordertable_BusPrice, 2) AS ordertable_BusPrice, ordertable_IsComplete FROM ordertable WHERE " +
 						"CASE " +
 						"WHEN ? = 1 THEN ordertable_IsComplete = 0 " +
 						"WHEN ? = 2 THEN ordertable_IsComplete = 1 " +
@@ -832,7 +832,28 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 		 * If it's not found....then return null
 		 *
 		 */
-		return null;
+		Discount discount = null;
+		try {
+			connect_to_db();
+			if (conn != null) {
+				String query = "SELECT * FROM discount WHERE discount_DiscountName = ?";
+				PreparedStatement pstmt = conn.prepareStatement(query);
+				pstmt.setString(1, name);
+				ResultSet rs = pstmt.executeQuery();
+				if (rs.next()) {
+					int ID = rs.getInt("discount_DiscountID");
+					String discountName = rs.getString("discount_DiscountName");
+					float amt = rs.getFloat("discount_Amount");
+					boolean isPercent = rs.getBoolean("discount_IsPercent");
+					discount = new Discount(ID, discountName, amt, isPercent);
+				}
+			}
+		} finally {
+			if (conn != null) {
+				conn.close();
+			}
+		}
+		return discount;
 	}
 
 
@@ -998,7 +1019,7 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 		try {
 			connect_to_db();
 			if(conn != null) {
-				String query = "SELECT topping_TopID, topping_TopName, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT, ROUND(topping_CustPrice, 2), ROUND(topping_BusPrice,2 ), topping_MinINVT, topping_CurINVT FROM topping WHERE topping_TopName = ?";
+				String query = "SELECT topping_TopID, topping_TopName, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT, ROUND(topping_CustPrice, 2) AS topping_CustPrice, ROUND(topping_BusPrice,2 ) AS topping_BusPrice, topping_MinINVT, topping_CurINVT FROM topping WHERE topping_TopName = ?";
 				PreparedStatement os = conn.prepareStatement(query);
 				os.setString(1, name);
 				ResultSet rs = os.executeQuery();
@@ -1115,15 +1136,19 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 				String pizzaDate = rs.getString("pizza_PizzaDate");
 				double custPrice = rs.getDouble("pizza_CustPrice");
 				double busPrice = rs.getDouble("pizza_BusPrice");
+//				System.out.println("pizzaID" + pizzaID);
+//				System.out.println("custPrice" + custPrice);
+//				System.out.println("busPrice" + busPrice);
 
 				Pizza pizza = new Pizza(pizzaID, size, crustType, o.getOrderID(),
 						pizzaState, pizzaDate, custPrice, busPrice);
 
 				// Add toppings to the pizza
 				ArrayList<Topping> toppings = getToppingsOnPizza(pizza);
-				for(Topping t : toppings) {
-					pizza.addToppings(t, t.getDoubled());  // We'll need to update this if we track "extra" toppings
-				}
+//				for(Topping t : toppings) {
+//					pizza.addToppings(t, t.getDoubled());  // We'll need to update this if we track "extra" toppings
+//				}
+				pizza.setToppings(toppings);
 
 				// Add discounts to the pizza
 				ArrayList<Discount> discounts = getDiscounts(pizza);
@@ -1133,7 +1158,7 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 
 				pizzas.add(pizza);
 			}
-
+//			System.out.println("Pizza array:" + pizzas);
 			return pizzas;
 
 		} finally {
