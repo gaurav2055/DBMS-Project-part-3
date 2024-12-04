@@ -1293,7 +1293,7 @@ public final class DBNinja {
 				String OrderMonth = rs.getString("OrderMonth");
 
 				// Format and print the row
-				System.out.printf("%-19s %-19s %-19f %-19s\n", Size, Crust, Profit, OrderMonth);
+				System.out.printf("%-19s %-19s %-19.2f %-19s\n", Size, Crust, Profit, OrderMonth);
 			}
 		} finally {
 			if(conn != null) {
