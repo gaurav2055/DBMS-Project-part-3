@@ -1243,8 +1243,8 @@ public final class DBNinja {
 			ResultSet rs = pstmt.executeQuery();
 
 			//Print Header
-			System.out.printf("%-19s %-15s\n", "Topping", "ToppingCount");
-			System.out.printf("%-19s %-15s\n", "--------", "-----------");
+			System.out.printf("%-19s %-15s\n", "Topping", "Topping Count");
+			System.out.printf("%-19s %-15s\n", "--------", "------------");
 
 			//Print row
 			while (rs.next()) {
@@ -1284,7 +1284,7 @@ public final class DBNinja {
 
 			//Print Header
 			System.out.printf("%-19s %-19s %-19s %-19s\n", "Pizza Size", "Pizza Crust", "Profit", "Last Order Date");
-			System.out.printf("%-19s %-19s %-19s %-19s\n", "----", "-----", "------", "----------");
+			System.out.printf("%-19s %-19s %-19s %-19s\n", "----------", "-----------", "------", "---------------");
 			//Print row
 			while (rs.next()) {
 				String Size = rs.getString("Size");
@@ -1324,8 +1324,8 @@ public final class DBNinja {
 			ResultSet rs = pstmt.executeQuery();
 
 			//Print Header
-			System.out.printf("%-20s %-20s %-20s %-20s %-20s\n", "Customer Type", "Order Month", "Total Order Price", "Total Order Cost", "Profit");
-			System.out.printf("%-20s %-20s %-20s %-20s %-20s\n", "-------------", "-----------", "-----------------", "----------------", "------");
+			System.out.printf("%-19s %-19s %-19s %-19s %-19s\n", "Customer Type", "Order Month", "Total Order Price", "Total Order Cost", "Profit");
+			System.out.printf("%-19s %-19s %-19s %-19s %-19s\n", "-------------", "-----------", "-----------------", "----------------", "------");
 			//Print row
 			while (rs.next()) {
 				String customerType = rs.getString("customerType");
@@ -1335,7 +1335,7 @@ public final class DBNinja {
 				double profit = rs.getDouble("Profit");
 
 				// Format and print the row
-				System.out.printf("%-20s %-20s %-20s %-20s %-20s\n", customerType == null ? "" : customerType, OrderMonth, TotalOrderPrice, TotalOrderCost, profit);
+				System.out.printf("%-19s %-19s %-19s %-19s %-19s\n", customerType == null ? "" : customerType, OrderMonth, TotalOrderPrice, TotalOrderCost, profit);
 			}
 		} finally {
 			if(conn != null) {

@@ -14,7 +14,7 @@ CREATE VIEW ToppingPopularity AS
            ) AS ToppingCount
     FROM topping LEFT JOIN pizza_topping ON topping.topping_TopID = pizza_topping.topping_TopID
     GROUP BY topping_TopName
-    ORDER BY `ToppingCount` DESC;
+    ORDER BY `ToppingCount` DESC, `ToppingCount`;
 
 -- View ProfitByPizza
 CREATE VIEW ProfitByPizza AS
