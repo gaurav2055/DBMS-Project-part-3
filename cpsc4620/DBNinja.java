@@ -679,6 +679,13 @@ public final class DBNinja {
 
 							break;
 					}
+					// Add pizzas to the order
+					ArrayList<Pizza> pizzas = getPizzas(order);
+					order.setPizzaList(pizzas);
+
+					// Add discounts to the order
+					ArrayList<Discount> discounts = getDiscounts(order);
+					order.setDiscountList(discounts);
 				}
 			}
 		} finally {
@@ -991,7 +998,7 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 		try {
 			connect_to_db();
 			if(conn != null) {
-				String query = "SELECT * FROM topping WHERE topping_TopName = ?";
+				String query = "SELECT topping_TopID, topping_TopName, topping_SmallAMT, topping_MedAMT, topping_LgAMT, topping_XLAMT, ROUND(topping_CustPrice, 2), ROUND(topping_BusPrice,2 ), topping_MinINVT, topping_CurINVT FROM topping WHERE topping_TopName = ?";
 				PreparedStatement os = conn.prepareStatement(query);
 				os.setString(1, name);
 				ResultSet rs = os.executeQuery();
@@ -1284,8 +1291,8 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 			ResultSet rs = pstmt.executeQuery();
 
 			//Print Header
-			System.out.printf("%-20s %-15s\n", "Topping", "ToppingCount");
-			System.out.printf("%-20s %15s\n", "--------", "-------------");
+			System.out.printf("%-19s %-15s\n", "Topping", "ToppingCount");
+			System.out.printf("%-19s %-15s\n", "--------", "-----------");
 
 			//Print row
 			while (rs.next()) {
@@ -1293,7 +1300,7 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 				int usedCount = rs.getInt("ToppingCount");
 
 				// Format and print the row
-				System.out.printf("%-20s %-15d\n", toppingName, usedCount);
+				System.out.printf("%-19s %-15d\n", toppingName, usedCount);
 			}
 		} finally {
 			if(conn != null) {
@@ -1324,8 +1331,8 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 			ResultSet rs = pstmt.executeQuery();
 
 			//Print Header
-			System.out.printf("%-15s %-15s %-15s %-15s\n", "Size", "Crust", "Profit", "OrderMonth");
-			System.out.printf("%-15s %-15s %-15s %-15s\n", "----", "-----", "------", "----------");
+			System.out.printf("%-19s %-19s %-19s %-19s\n", "Pizza Size", "Pizza Crust", "Profit", "Last Order Date");
+			System.out.printf("%-19s %-19s %-19s %-19s\n", "----", "-----", "------", "----------");
 			//Print row
 			while (rs.next()) {
 				String Size = rs.getString("Size");
@@ -1334,7 +1341,7 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 				String OrderMonth = rs.getString("Size");
 
 				// Format and print the row
-				System.out.printf("%-15s %-15S %-15f %-15s\n", Size, Crust, Profit, OrderMonth);
+				System.out.printf("%-19s %-19S %-19f %-19s\n", Size, Crust, Profit, OrderMonth);
 			}
 		} finally {
 			if(conn != null) {
@@ -1365,8 +1372,8 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 			ResultSet rs = pstmt.executeQuery();
 
 			//Print Header
-			System.out.printf("%-15s %-15s %-15s %-15s %-15s\n", "customerType", "OrderMonth", "TotalOrderPrice", "TotalOrderCost", "Profit");
-			System.out.println("--------------------------------------------------");
+			System.out.printf("%-20s %-20s %-20s %-20s %-20s\n", "Customer Type", "Order Month", "Total Order Price", "Total Order Cost", "Profit");
+			System.out.printf("%-20s %-20s %-20s %-20s %-20s\n", "-------------", "-----------", "-----------------", "----------------", "------");
 			//Print row
 			while (rs.next()) {
 				String customerType = rs.getString("customerType");
@@ -1376,7 +1383,7 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 				double profit = rs.getDouble("Profit");
 
 				// Format and print the row
-				System.out.printf("%-15s %-15s %-15s %-15s %-10s\n", customerType == null ? "" : customerType, OrderMonth, TotalOrderPrice, TotalOrderCost, profit);
+				System.out.printf("%-20s %-20s %-20s %-20s %-20s\n", customerType == null ? "" : customerType, OrderMonth, TotalOrderPrice, TotalOrderCost, profit);
 			}
 		} finally {
 			if(conn != null) {
