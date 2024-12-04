@@ -793,6 +793,12 @@ public final class DBNinja {
 
 							break;
 					}
+					ArrayList<Pizza> pizzas = getPizzas(order);
+					order.setPizzaList(pizzas);
+
+					// Add discounts to the order
+					ArrayList<Discount> discounts = getDiscounts(order);
+					order.setDiscountList(discounts);
 					orders.add(order);
 				}
 			}
@@ -1159,9 +1165,10 @@ public static ArrayList<Discount> getDiscountList() throws SQLException, IOExcep
 
 				// Add discounts to the pizza
 				ArrayList<Discount> discounts = getDiscounts(pizza);
-				for(Discount d : discounts) {
-					pizza.addDiscounts(d);
-				}
+//				for(Discount d : discounts) {
+//					pizza.addDiscounts(d);
+//				}
+				pizza.setDiscounts(discounts);
 
 				pizzas.add(pizza);
 			}
