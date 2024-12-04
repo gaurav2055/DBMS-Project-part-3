@@ -219,6 +219,8 @@ public final class DBNinja {
 
 				// 2. Add toppings for this pizza
 				for (Topping t : p.getToppings()) {
+					String size = p.getSize();
+					boolean isDouble = t.getDoubled();
 					try {
 						connect_to_db();
 						if(conn != null){
@@ -226,15 +228,34 @@ public final class DBNinja {
 							pstmt = conn.prepareStatement(toppingSQL);
 							pstmt.setInt(1, generatedPizzaID);
 							pstmt.setInt(2, t.getTopID());
-							pstmt.setBoolean(3, t.getDoubled());
+							pstmt.setBoolean(3, isDouble);
 							pstmt.executeUpdate();
-							addToInventory(t.getTopID(),t.getDoubled() ? -2: -1);
+
 						}
 					} finally {
 						if (conn != null) {
 							conn.close();
 						}
 					}
+					double toppingAmt = 0;
+					Topping topping = findToppingByName(t.getTopName());
+					switch (size){
+						case "Large":
+							toppingAmt = topping.getLgAMT();
+							break;
+						case "Medium":
+							toppingAmt = topping.getMedAMT();
+							break;
+						case "Small":
+							toppingAmt = topping.getSmallAMT();
+							break;
+						case "XLarge":
+							toppingAmt = topping.getXLAMT();
+							break;
+						default:
+							toppingAmt = 1;
+					}
+					addToInventory(t.getTopID(),t.getDoubled() ? (-2*toppingAmt): (-1*toppingAmt));
 				}
 
 				// 3. Add pizza discounts
