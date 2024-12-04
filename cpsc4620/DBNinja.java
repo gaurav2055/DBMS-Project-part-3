@@ -1244,7 +1244,7 @@ public final class DBNinja {
 
 			//Print Header
 			System.out.printf("%-19s %-15s\n", "Topping", "Topping Count");
-			System.out.printf("%-19s %-15s\n", "--------", "------------");
+			System.out.printf("%-19s %-15s\n", "-------", "-------------");
 
 			//Print row
 			while (rs.next()) {
@@ -1290,7 +1290,7 @@ public final class DBNinja {
 				String Size = rs.getString("Size");
 				String Crust = rs.getString("Crust");
 				double Profit = rs.getDouble("Profit");
-				String OrderMonth = rs.getString("Size");
+				String OrderMonth = rs.getString("OrderMonth");
 
 				// Format and print the row
 				System.out.printf("%-19s %-19S %-19f %-19s\n", Size, Crust, Profit, OrderMonth);
