@@ -423,12 +423,11 @@ public final class DBNinja {
 					switch (orderType) {
 						case "delivery":
 							try {
-//								connect_to_db();
+								connect_to_db();
 								String queryDel = "SELECT * FROM delivery WHERE ordertable_OrderID = ?";
-//								PreparedStatement pstmtDel = conn.prepareStatement(queryDel);
-								pstmt = conn.prepareStatement(queryDel);
-								pstmt.setInt(1, orderId);
-								ResultSet rsDel = pstmt.executeQuery();
+								PreparedStatement pstmtDel = conn.prepareStatement(queryDel);
+								pstmtDel.setInt(1, orderId);
+								ResultSet rsDel = pstmtDel.executeQuery();
 								if(rsDel.next()) {
 									String HouseNum = rsDel.getString("delivery_HouseNum");
 									String Street = rsDel.getString("delivery_Street");
@@ -449,12 +448,11 @@ public final class DBNinja {
 
 						case "dinein":
 							try {
-//								connect_to_db();
+								connect_to_db();
 								String queryDinein = "SELECT * FROM dinein WHERE ordertable_OrderID = ?";
-//								PreparedStatement pstmtDinein = conn.prepareStatement(queryDinein);
-								pstmt = conn.prepareStatement(queryDinein);
-								pstmt.setInt(1, orderId);
-								ResultSet rsDinein = pstmt.executeQuery();
+								PreparedStatement pstmtDinein = conn.prepareStatement(queryDinein);
+								pstmtDinein.setInt(1, orderId);
+								ResultSet rsDinein = pstmtDinein.executeQuery();
 								if(rsDinein.next()) {
 									int tableNum = rsDinein.getInt("dinein_TableNum");
 									order =
@@ -469,11 +467,11 @@ public final class DBNinja {
 
 						case "pickup":
 							try {
-//								connect_to_db();
+								connect_to_db();
 								String queryPickup = "SELECT * FROM pickup WHERE ordertable_OrderID = ?";
-								pstmt = conn.prepareStatement(queryPickup);
-								pstmt.setInt(1, orderId);
-								ResultSet rsPickup = pstmt.executeQuery();
+								PreparedStatement pstmtPickup = conn.prepareStatement(queryPickup);
+								pstmtPickup.setInt(1, orderId);
+								ResultSet rsPickup = pstmtPickup.executeQuery();
 								if(rsPickup.next()) {
 									boolean isPickedUp = rsPickup.getBoolean("pickup_IsPickedUp");
 									order =
@@ -539,11 +537,11 @@ public final class DBNinja {
 					switch (orderType) {
 						case "delivery":
 							try {
-//								connect_to_db();
+								connect_to_db();
 								String queryDel = "SELECT * FROM delivery WHERE ordertable_OrderID = ?";
-								pstmt = conn.prepareStatement(queryDel);
-								pstmt.setInt(1, orderId);
-								ResultSet rsDel = pstmt.executeQuery();
+								PreparedStatement pstmtDel = conn.prepareStatement(queryDel);
+								pstmtDel.setInt(1, orderId);
+								ResultSet rsDel = pstmtDel.executeQuery();
 								if(rsDel.next()) {
 									String HouseNum = rsDel.getString("delivery_HouseNum");
 									String Street = rsDel.getString("delivery_Street");
@@ -564,11 +562,11 @@ public final class DBNinja {
 
 						case "dinein":
 							try {
-//								connect_to_db();
+								connect_to_db();
 								String queryDinein = "SELECT * FROM dinein WHERE ordertable_OrderID = ?";
-								pstmt = conn.prepareStatement(queryDinein);
-								pstmt.setInt(1, orderId);
-								ResultSet rsDinein = pstmt.executeQuery();
+								PreparedStatement pstmtDinein = conn.prepareStatement(queryDinein);
+								pstmtDinein.setInt(1, orderId);
+								ResultSet rsDinein = pstmtDinein.executeQuery();
 								if(rsDinein.next()) {
 									int tableNum = rsDinein.getInt("dinein_TableNum");
 									order =
@@ -583,11 +581,11 @@ public final class DBNinja {
 
 						case "pickup":
 							try {
-//								connect_to_db();
+								connect_to_db();
 								String queryPickup = "SELECT * FROM pickup WHERE ordertable_OrderID = ?";
-								pstmt = conn.prepareStatement(queryPickup);
-								pstmt.setInt(1, orderId);
-								ResultSet rsPickup = pstmt.executeQuery();
+								PreparedStatement pstmtPickup = conn.prepareStatement(queryPickup);
+								pstmtPickup.setInt(1, orderId);
+								ResultSet rsPickup = pstmtPickup.executeQuery();
 								if(rsPickup.next()) {
 									boolean isPickedUp = rsPickup.getBoolean("pickup_IsPickedUp");
 									order =
@@ -646,11 +644,11 @@ public final class DBNinja {
 					switch (orderType) {
 						case "delivery":
 							try {
-//								connect_to_db();
+								connect_to_db();
 								String queryDel = "SELECT * FROM delivery WHERE ordertable_OrderID = ?";
-								pstmt = conn.prepareStatement(queryDel);
-								pstmt.setInt(1, orderId);
-								ResultSet rsDel = pstmt.executeQuery();
+								PreparedStatement pstmtDel = conn.prepareStatement(queryDel);
+								pstmtDel.setInt(1, orderId);
+								ResultSet rsDel = pstmtDel.executeQuery();
 								if(rsDel.next()) {
 									String HouseNum = rsDel.getString("delivery_HouseNum");
 									String Street = rsDel.getString("delivery_Street");
@@ -671,11 +669,11 @@ public final class DBNinja {
 
 						case "dinein":
 							try {
-//								connect_to_db();
+								connect_to_db();
 								String queryDinein = "SELECT * FROM dinein WHERE ordertable_OrderID = ?";
-								pstmt = conn.prepareStatement(queryDinein);
-								pstmt.setInt(1, orderId);
-								ResultSet rsDinein = pstmt.executeQuery();
+								PreparedStatement pstmtDinein = conn.prepareStatement(queryDinein);
+								pstmtDinein.setInt(1, orderId);
+								ResultSet rsDinein = pstmtDinein.executeQuery();
 								if(rsDinein.next()) {
 									int tableNum = rsDinein.getInt("dinein_TableNum");
 									order =
@@ -690,11 +688,11 @@ public final class DBNinja {
 
 						case "pickup":
 							try {
-//								connect_to_db();
+								connect_to_db();
 								String queryPickup = "SELECT * FROM pickup WHERE ordertable_OrderID = ?";
-								pstmt = conn.prepareStatement(queryPickup);
-								pstmt.setInt(1, orderId);
-								ResultSet rsPickup = pstmt.executeQuery();
+								PreparedStatement pstmtPickup = conn.prepareStatement(queryPickup);
+								pstmtPickup.setInt(1, orderId);
+								ResultSet rsPickup = pstmtPickup.executeQuery();
 								if(rsPickup.next()) {
 									boolean isPickedUp = rsPickup.getBoolean("pickup_IsPickedUp");
 									order =
