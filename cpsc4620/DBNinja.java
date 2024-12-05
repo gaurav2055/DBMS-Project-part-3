@@ -371,11 +371,11 @@ public final class DBNinja {
 				PreparedStatement pstmtPizza = null;
 				PreparedStatement pstmtDelivery = null;
 				PreparedStatement pstmtPickup = null;
-				conn.setAutoCommit(false); // Start transaction
+
 				switch (newState) {
 					case PREPARED:
 						// Mark the order as complete
-						String orderSQL = "UPDATE ordertable SET ordertable_IsComplete = true WHERE ordertable_OrderID = ?";
+						String orderSQL = "UPDATE ordertable SET ordertable_IsComplete = 1 WHERE ordertable_OrderID = ?";
 						pstmtOrder = conn.prepareStatement(orderSQL);
 						pstmtOrder.setInt(1, ordertable_OrderID);
 						pstmtOrder.executeUpdate();
@@ -395,16 +395,14 @@ public final class DBNinja {
 						break;
 					case PICKEDUP:
 						// Update pickup status
-						String pickupSQL = "UPDATE pickup SET pickup_IsPickedUp = true WHERE ordertable_OrderID = ?";
+						String pickupSQL = "UPDATE pickup SET pickup_IsPickedUp = 1 WHERE ordertable_OrderID = ?";
 						pstmtPickup = conn.prepareStatement(pickupSQL);
 						pstmtPickup.setInt(1, ordertable_OrderID);
 						pstmtPickup.executeUpdate();
-						System.out.println();
 						break;
 					default:
 						throw new IllegalArgumentException("Invalid order state: " + newState);
 				}
-				conn.commit(); // Commit the transaction if everything is successful
 			}
 		} finally {
 			conn.close();
