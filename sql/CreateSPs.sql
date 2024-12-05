@@ -10,11 +10,27 @@ BEGIN
 end //
 
 -- Stored Procedure 2
-CREATE PROCEDURE CREATEORDER(IN CUSTID INT, IN ORDERTYPE VARCHAR(30), IN ORDERDATETIME DATETIME, IN CUSTPRICE DECIMAL(5,2), IN BUSPRICE DECIMAL(5,2), IN ORDERCOMPLETE TINYINT(1))
+CREATE PROCEDURE CalculateInventoryStatus(
+    IN p_ToppingName VARCHAR(30),
+    OUT p_Status VARCHAR(50)
+)
 BEGIN
-    INSERT INTO ordertable (customer_CustID, ordertable_OrderType, ordertable_OrderDateTime, ordertable_CustPrice, ordertable_BusPrice, ordertable_isComplete)
-    VALUES (CUSTID, ORDERTYPE, ORDERDATETIME, CUSTPRICE, BUSPRICE, ORDERCOMPLETE);
-end //
+    DECLARE cur_inventory INT;
+    DECLARE min_inventory INT;
+
+    -- Get the current and minimum inventory levels
+    SELECT topping_CurINVT, topping_MinINVT
+    INTO cur_inventory, min_inventory
+    FROM topping
+    WHERE topping_TopName = p_ToppingName;
+
+    -- Determine inventory status
+    IF cur_inventory < min_inventory THEN
+        SET p_Status = CONCAT(p_ToppingName, ' is below the required inventory level!');
+    ELSE
+        SET p_Status = CONCAT(p_ToppingName, ' has sufficient inventory.');
+    END IF;
+END //
 
 -- Stored Function 1
 CREATE FUNCTION CalculateOrderCost (
