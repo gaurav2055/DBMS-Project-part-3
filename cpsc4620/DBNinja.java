@@ -241,21 +241,22 @@ public final class DBNinja {
 					Topping topping = findToppingByName(t.getTopName());
 					switch (size){
 						case "Large":
-							toppingAmt = Math.ceil(topping.getLgAMT());
+							toppingAmt = topping.getLgAMT();
 							break;
 						case "Medium":
-							toppingAmt = Math.ceil(topping.getMedAMT());
+							toppingAmt = topping.getMedAMT();
 							break;
 						case "Small":
-							toppingAmt = Math.ceil(topping.getSmallAMT());
+							toppingAmt = topping.getSmallAMT();
 							break;
 						case "XLarge":
-							toppingAmt = Math.ceil(topping.getXLAMT());
+							toppingAmt = topping.getXLAMT();
 							break;
 						default:
 							toppingAmt = 1;
 					}
-					addToInventory(t.getTopID(), isDouble ? (-2*toppingAmt): (-1*toppingAmt));
+					double qty = Math.ceil(toppingAmt) * (isDouble ? -2 : -1);
+					addToInventory(t.getTopID(), qty);
 				}
 
 				// 3. Add pizza discounts

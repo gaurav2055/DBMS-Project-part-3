@@ -17,26 +17,32 @@ BEGIN
 end //
 
 -- Stored Function 1
-CREATE FUNCTION CUSTTOTAL(ORDERID INT) RETURNS DECIMAL(5,2)
-DETERMINISTIC
+CREATE FUNCTION CalculateOrderCost (
+    p_OrderID INT
+) RETURNS DECIMAL(10,2)
+READS SQL DATA
 BEGIN
-    DECLARE TOTAL DECIMAL(5,2);
-    SELECT SUM(pizza_CustPrice) INTO TOTAL
-    FROM pizza
-    WHERE ordertable_OrderID = ORDERID;
-    RETURN TOTAL;
-end //
+    DECLARE totalCost DECIMAL(10,2);
+    SET totalCost = (
+        SELECT SUM(pizza_CustPrice)
+        FROM pizza
+        WHERE ordertable_OrderID = p_OrderID
+    );
+    RETURN totalCost;
+END //
 
 -- Stored Function 2
-CREATE FUNCTION BUSTOTAL(ORDERID INT) RETURNS DECIMAL(5,2)
+CREATE FUNCTION GetCustomerOrderCount(customer_id INT)
+RETURNS INT
 DETERMINISTIC
 BEGIN
-    DECLARE TOTAL DECIMAL(5,2);
-    SELECT SUM(pizza_bUSPrice) INTO TOTAL
-    FROM pizza
-    WHERE ordertable_OrderID = ORDERID;
-    RETURN TOTAL;
-end //
+    DECLARE order_count INT;
+    SELECT COUNT(*)
+    INTO order_count
+    FROM ordertable
+    WHERE customer_CustID = customer_id;
+    RETURN order_count;
+END //
 
 -- Update Trigger 1
 CREATE TRIGGER PIZZASTATUS AFTER UPDATE ON pizza
