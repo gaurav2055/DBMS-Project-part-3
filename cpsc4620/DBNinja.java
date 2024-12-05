@@ -336,36 +336,72 @@ public final class DBNinja {
 		try {
 			connect_to_db();
 			if (conn != null) {
+//				switch (newState) {
+//					case PREPARED:
+//						// Mark the order as complete
+//						String orderSQL = "UPDATE ordertable SET ordertable_IsComplete = true WHERE ordertable_OrderID = ?";
+//						PreparedStatement pstmt = conn.prepareStatement(orderSQL);
+//						pstmt.setInt(1, ordertable_OrderID);
+//						pstmt.executeUpdate();
+//
+//						// Mark all pizzas in the order as complete
+//						String pizzaSQL = "UPDATE pizza SET pizza_PizzaState = 'Completed' WHERE ordertable_OrderID = ?";
+//						pstmt = conn.prepareStatement(pizzaSQL);
+//						pstmt.setInt(1, ordertable_OrderID);
+//						pstmt.executeUpdate();
+//						break;
+//
+//					case DELIVERED:
+//						// Update delivery status
+//						String deliverySQL = "UPDATE delivery SET delivery_IsDelivered = true WHERE ordertable_OrderID = ?";
+//						pstmt = conn.prepareStatement(deliverySQL);
+//						pstmt.setInt(1, ordertable_OrderID);
+//						pstmt.executeUpdate();
+//						break;
+//
+//					case PICKEDUP:
+//						// Update pickup status
+//						String pickupSQL = "UPDATE pickup SET pickup_IsPickedUp = true WHERE ordertable_OrderID = ?";
+//						pstmt = conn.prepareStatement(pickupSQL);
+//						pstmt.setInt(1, ordertable_OrderID);
+//						pstmt.executeUpdate();
+//						break;
+//				}
+				PreparedStatement pstmtOrder = null;
+				PreparedStatement pstmtPizza = null;
+				PreparedStatement pstmtDelivery = null;
+				PreparedStatement pstmtPickup = null;
+
 				switch (newState) {
 					case PREPARED:
 						// Mark the order as complete
 						String orderSQL = "UPDATE ordertable SET ordertable_IsComplete = true WHERE ordertable_OrderID = ?";
-						PreparedStatement pstmt = conn.prepareStatement(orderSQL);
-						pstmt.setInt(1, ordertable_OrderID);
-						pstmt.executeUpdate();
+						pstmtOrder = conn.prepareStatement(orderSQL);
+						pstmtOrder.setInt(1, ordertable_OrderID);
+						pstmtOrder.executeUpdate();
 
 						// Mark all pizzas in the order as complete
 						String pizzaSQL = "UPDATE pizza SET pizza_PizzaState = 'Completed' WHERE ordertable_OrderID = ?";
-						pstmt = conn.prepareStatement(pizzaSQL);
-						pstmt.setInt(1, ordertable_OrderID);
-						pstmt.executeUpdate();
+						pstmtPizza = conn.prepareStatement(pizzaSQL);
+						pstmtPizza.setInt(1, ordertable_OrderID);
+						pstmtPizza.executeUpdate();
 						break;
-
 					case DELIVERED:
 						// Update delivery status
 						String deliverySQL = "UPDATE delivery SET delivery_IsDelivered = true WHERE ordertable_OrderID = ?";
-						pstmt = conn.prepareStatement(deliverySQL);
-						pstmt.setInt(1, ordertable_OrderID);
-						pstmt.executeUpdate();
+						pstmtDelivery = conn.prepareStatement(deliverySQL);
+						pstmtDelivery.setInt(1, ordertable_OrderID);
+						pstmtDelivery.executeUpdate();
 						break;
-
 					case PICKEDUP:
 						// Update pickup status
 						String pickupSQL = "UPDATE pickup SET pickup_IsPickedUp = true WHERE ordertable_OrderID = ?";
-						pstmt = conn.prepareStatement(pickupSQL);
-						pstmt.setInt(1, ordertable_OrderID);
-						pstmt.executeUpdate();
+						pstmtPickup = conn.prepareStatement(pickupSQL);
+						pstmtPickup.setInt(1, ordertable_OrderID);
+						pstmtPickup.executeUpdate();
 						break;
+					default:
+						throw new IllegalArgumentException("Invalid order state: " + newState);
 				}
 			}
 		} finally {
