@@ -241,16 +241,16 @@ public final class DBNinja {
 					Topping topping = findToppingByName(t.getTopName());
 					switch (size){
 						case "Large":
-							toppingAmt = topping.getLgAMT();
+							toppingAmt = Math.floor(topping.getLgAMT());
 							break;
 						case "Medium":
-							toppingAmt = topping.getMedAMT();
+							toppingAmt = Math.floor(topping.getMedAMT());
 							break;
 						case "Small":
-							toppingAmt = topping.getSmallAMT();
+							toppingAmt = Math.floor(topping.getSmallAMT());
 							break;
 						case "XLarge":
-							toppingAmt = topping.getXLAMT();
+							toppingAmt = Math.floor(topping.getXLAMT());
 							break;
 						default:
 							toppingAmt = 1;
